@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Checkable;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static android.content.Intent.ACTION_CALL;
@@ -41,7 +43,6 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permisos);
 
-        swPermisoLlamar = findViewById(R.id.swPermiso);
         findViewById(R.id.btnLogin).setOnClickListener(this);
 
         solicitarPermiso();
@@ -51,39 +52,36 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvPermiso.setLayoutManager(layoutManager);
 
-        List<Permiso> ListaPermisos = new ArrayList<>();
-        ListaPermisos.add(new Permiso("Permiso a Internet",false));
-        ListaPermisos.add(new Permiso("Permiso a Llamadas",false));
-        ListaPermisos.add(new Permiso("Permiso a Camara",false));
-        ListaPermisos.add(new Permiso("Permiso al Almacenamiento",false));
+        final List<Permiso> ListaPermisos = new ArrayList<>();
+        ListaPermisos.add(new Permiso("Permiso a localizacion",false, Manifest.permission.ACCESS_FINE_LOCATION));
+        ListaPermisos.add(new Permiso("Permiso a Llamadas",false, Manifest.permission.CALL_PHONE));
+        ListaPermisos.add(new Permiso("Permiso a Camara",false, Manifest.permission.CAMERA));
+        ListaPermisos.add(new Permiso("Permiso al Almacenamiento",false, Manifest.permission.READ_EXTERNAL_STORAGE));
 
 
-        AdaptadorPermiso Permisos = new AdaptadorPermiso(ListaPermisos);
+        final AdaptadorPermiso Permisos = new AdaptadorPermiso(ListaPermisos);
+
         Permisos.setOnClicListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (v.getId() == R.id.swPermiso){
-                    if (swPermisoLlamar.isChecked()){
-                        int permisoLlamar = ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE);
+                Permiso permisoSelec = ListaPermisos.get(rvPermiso.getChildAdapterPosition(v));
+                int elPermiso = ActivityCompat.checkSelfPermission(getApplicationContext(), permisoSelec.getPeermisoReal());
 
-                        if(permisoLlamar != PackageManager.PERMISSION_GRANTED) {
+                if(elPermiso != PackageManager.PERMISSION_GRANTED) {
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, IDventanita);
-                                return;
-                            }
-                        }hacerLlamada();
-                        Toast.makeText(PermisosActivity.this,"Activado",Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(PermisosActivity.this,"Desactivado",Toast.LENGTH_SHORT).show();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{permisoSelec.getPeermisoReal()}, IDventanita);
+                        return;
                     }
                 }
+                if (permisoSelec.getPeermisoReal() == Manifest.permission.CALL_PHONE)
+                    hacerLlamada();
+
+//                Toast.makeText(PermisosActivity.this,"Activado",Toast.LENGTH_SHORT).show();
             }
         });
         rvPermiso.setAdapter(Permisos);
 
-//        swPermisoLlamar.setOnClickListener(this);
     }
 
     private void solicitarPermiso() {
@@ -96,12 +94,22 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        if (requestCode==IDventanita){
+        Log.i("permisos_nombre", Arrays.deepToString(permissions));
+        Log.i("permisos_acceso", Arrays.toString(grantResults));
 
+        if (requestCode==IDventanita){
             if (permissions.length>=1){
-                if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                    hacerLlamada();
+                int acceso=-1;
+                for (int permiso:grantResults){
+                    permiso = acceso;
+                    if (permiso == PackageManager.PERMISSION_DENIED)
+                        break;
                 }
+                if (acceso == PackageManager.PERMISSION_GRANTED)
+                    hacerLlamada();
+//                if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
+//                    hacerLlamada();
+//                }
             }
         }
     }

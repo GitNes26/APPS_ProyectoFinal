@@ -3,17 +3,12 @@ package com.nestor.proyectofinal;
 public class Permiso {
     private String permiso;
     private boolean acceso;
+    private String peermisoReal;
 
-    public Permiso(String permiso, boolean acceso) {
+    public Permiso(String permiso, boolean acceso, String peermisoReal) {
         this.permiso = permiso;
         this.acceso = acceso;
-    }
-
-    public Permiso(boolean acceso) {
-        this.acceso = acceso;
-    }
-
-    public Permiso() {
+        this.peermisoReal = peermisoReal;
     }
 
     public String getPermiso() {
@@ -30,5 +25,13 @@ public class Permiso {
 
     public void setAcceso(boolean acceso) {
         this.acceso = acceso;
+    }
+
+    public String getPeermisoReal() {
+        return peermisoReal;
+    }
+
+    public void setPeermisoReal(String peermisoReal) {
+        this.peermisoReal = peermisoReal;
     }
 }

@@ -24,7 +24,7 @@ public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miho
     public Miholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View vistaPermiso = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_permiso,parent,false);
-        vistaPermiso.setOnClickListener(this);
+        vistaPermiso.findViewById(R.id.swPermiso).setOnClickListener(this);
         return new Miholder(vistaPermiso);
     }
 
