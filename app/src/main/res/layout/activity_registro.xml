@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/fondo_login_montes"
+    tools:context=".RegistroActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#95000000"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/add_empleado"/>
+        <EditText
+            android:id="@+id/txtRegUsuario"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="20sp"
+            android:hint="Nombre de usuario"
+            android:textColorHint="#5d5d5d"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/rectangulo_redondeado_semitrans"/>
+        <EditText
+            android:id="@+id/txtRegContra"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="20sp"
+            android:layout_marginVertical="50dp"
+            android:hint="Introducir contrseña"
+            android:textColorHint="#5d5d5d"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/rectangulo_redondeado_blanco"/>
+        <EditText
+            android:id="@+id/txtRegNombre"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="20sp"
+            android:layout_marginVertical="50dp"
+            android:hint="Introducir contrseña"
+            android:textColorHint="#5d5d5d"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/rectangulo_redondeado_blanco"/>
+    </LinearLayout>
+
+</LinearLayout>

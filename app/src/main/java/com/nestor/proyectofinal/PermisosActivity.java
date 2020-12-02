@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Person;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -29,14 +30,10 @@ import static android.content.Intent.ACTION_CALL;
 
 public class PermisosActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Switch swPermisoInternet;
-    Switch swPermisoLlamar;
-    Switch swPermisoCamara;
     private RecyclerView rvPermiso;
 //    private RequestQueue cartero;
 //    private VolleyS mVolleyS;
 
-    final private int IDventanita = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,42 +42,43 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
 
         findViewById(R.id.btnLogin).setOnClickListener(this);
 
-        solicitarPermiso();
+//        solicitarPermiso();
 
         rvPermiso = findViewById(R.id.rvPermisos);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvPermiso.setLayoutManager(layoutManager);
 
+
         final List<Permiso> ListaPermisos = new ArrayList<>();
-        ListaPermisos.add(new Permiso("Permiso a localizacion",false, Manifest.permission.ACCESS_FINE_LOCATION));
-        ListaPermisos.add(new Permiso("Permiso a Llamadas",false, Manifest.permission.CALL_PHONE));
-        ListaPermisos.add(new Permiso("Permiso a Camara",false, Manifest.permission.CAMERA));
-        ListaPermisos.add(new Permiso("Permiso al Almacenamiento",false, Manifest.permission.READ_EXTERNAL_STORAGE));
+        ListaPermisos.add(new Permiso("De Localizacion", Manifest.permission.ACCESS_FINE_LOCATION));
+        ListaPermisos.add(new Permiso("De Llamadas", Manifest.permission.CALL_PHONE));
+        ListaPermisos.add(new Permiso("De Camara", Manifest.permission.CAMERA));
+        ListaPermisos.add(new Permiso("De Almacenamiento", Manifest.permission.READ_EXTERNAL_STORAGE));
 
 
-        final AdaptadorPermiso Permisos = new AdaptadorPermiso(ListaPermisos);
-
-        Permisos.setOnClicListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Permiso permisoSelec = ListaPermisos.get(rvPermiso.getChildAdapterPosition(v));
-                int elPermiso = ActivityCompat.checkSelfPermission(getApplicationContext(), permisoSelec.getPeermisoReal());
-
-                if(elPermiso != PackageManager.PERMISSION_GRANTED) {
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{permisoSelec.getPeermisoReal()}, IDventanita);
-                        return;
-                    }
-                }
-                if (permisoSelec.getPeermisoReal() == Manifest.permission.CALL_PHONE)
-                    hacerLlamada();
-
-//                Toast.makeText(PermisosActivity.this,"Activado",Toast.LENGTH_SHORT).show();
-            }
-        });
+        final AdaptadorPermiso Permisos = new AdaptadorPermiso(ListaPermisos, this);
         rvPermiso.setAdapter(Permisos);
+//        Permisos.setOnClicListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i("aqui", String.valueOf(rvPermiso.getChildAdapterPosition(v)));
+////                Permiso permisoSelec = ListaPermisos.get(rvPermiso.getChildAdapterPosition(v));
+//                int elPermiso = ActivityCompat.checkSelfPermission(getApplicationContext(), /*Manifest.permission.ACCESS_FINE_LOCATION*/ permisoSelec.getPeermisoReal());
+//
+//                if(elPermiso != PackageManager.PERMISSION_GRANTED) {
+//
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                        requestPermissions(new String[]{permisoSelec.getPeermisoReal()/*Manifest.permission.ACCESS_FINE_LOCATION*/}, IDventanita);
+//                        return;
+//                    }
+//                }
+////                if (permisoSelec.getPeermisoReal() == Manifest.permission.CALL_PHONE)
+////                    hacerLlamada();
+//
+////                Toast.makeText(PermisosActivity.this,"Activado",Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
     }
 
@@ -97,7 +95,7 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
         Log.i("permisos_nombre", Arrays.deepToString(permissions));
         Log.i("permisos_acceso", Arrays.toString(grantResults));
 
-        if (requestCode==IDventanita){
+        if (requestCode==26){
             if (permissions.length>=1){
                 int acceso=-1;
                 for (int permiso:grantResults){
@@ -105,11 +103,6 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
                     if (permiso == PackageManager.PERMISSION_DENIED)
                         break;
                 }
-                if (acceso == PackageManager.PERMISSION_GRANTED)
-                    hacerLlamada();
-//                if (grantResults[0]==PackageManager.PERMISSION_GRANTED){
-//                    hacerLlamada();
-//                }
             }
         }
     }
@@ -120,16 +113,4 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
     }
-
-//    @Override
-//    public void onClick(View v) {
-//        if (v.getId() == R.id.swPermiso){
-//            if (swPermisoLlamar.isChecked()){
-//                Toast.makeText(PermisosActivity.this,"Activado",Toast.LENGTH_SHORT).show();
-//            }
-//            else {
-//                Toast.makeText(PermisosActivity.this,"Desactivado",Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
 }

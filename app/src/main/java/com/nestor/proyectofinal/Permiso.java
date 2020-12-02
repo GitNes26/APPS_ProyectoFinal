@@ -11,6 +11,11 @@ public class Permiso {
         this.peermisoReal = peermisoReal;
     }
 
+    public Permiso(String permiso, String peermisoReal) {
+        this.permiso = permiso;
+        this.peermisoReal = peermisoReal;
+    }
+
     public String getPermiso() {
         return permiso;
     }
