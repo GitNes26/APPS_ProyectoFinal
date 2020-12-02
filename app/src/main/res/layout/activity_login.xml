@@ -34,12 +34,12 @@
             android:gravity="center"
             android:layout_weight="1">
             <EditText
-                android:id="@+id/txtUsuario"
+                android:id="@+id/txtCorreo"
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginHorizontal="20sp"
-                android:hint="Usuario"
+                android:hint="Correo"
                 android:textColorHint="#5d5d5d"
                 android:textAlignment="center"
                 android:textColor="#000"

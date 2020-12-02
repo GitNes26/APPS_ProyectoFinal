@@ -42,8 +42,6 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
 
         findViewById(R.id.btnLogin).setOnClickListener(this);
 
-//        solicitarPermiso();
-
         rvPermiso = findViewById(R.id.rvPermisos);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -59,34 +57,7 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
 
         final AdaptadorPermiso Permisos = new AdaptadorPermiso(ListaPermisos, this);
         rvPermiso.setAdapter(Permisos);
-//        Permisos.setOnClicListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i("aqui", String.valueOf(rvPermiso.getChildAdapterPosition(v)));
-////                Permiso permisoSelec = ListaPermisos.get(rvPermiso.getChildAdapterPosition(v));
-//                int elPermiso = ActivityCompat.checkSelfPermission(getApplicationContext(), /*Manifest.permission.ACCESS_FINE_LOCATION*/ permisoSelec.getPeermisoReal());
-//
-//                if(elPermiso != PackageManager.PERMISSION_GRANTED) {
-//
-//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                        requestPermissions(new String[]{permisoSelec.getPeermisoReal()/*Manifest.permission.ACCESS_FINE_LOCATION*/}, IDventanita);
-//                        return;
-//                    }
-//                }
-////                if (permisoSelec.getPeermisoReal() == Manifest.permission.CALL_PHONE)
-////                    hacerLlamada();
-//
-////                Toast.makeText(PermisosActivity.this,"Activado",Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
-    }
-
-    private void solicitarPermiso() {
-
-    }
-    private void hacerLlamada() {
-        startActivity(new Intent(ACTION_CALL, Uri.parse("tel:8715265468")));
     }
 
     @Override

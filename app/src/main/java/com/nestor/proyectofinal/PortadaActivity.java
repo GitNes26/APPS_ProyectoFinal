@@ -1,10 +1,17 @@
 package com.nestor.proyectofinal;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
+
+import java.security.acl.Permission;
+import java.util.Arrays;
 
 public class PortadaActivity extends AppCompatActivity {
 
@@ -28,6 +35,5 @@ public class PortadaActivity extends AppCompatActivity {
             }
         }.start();
     }
-
 
 }

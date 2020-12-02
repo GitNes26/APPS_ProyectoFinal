@@ -68,9 +68,11 @@ public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miho
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 ActivityCompat.requestPermissions(activity, new String[]{permisoCompleto}, 26);
-//                                if (elPermiso == -1)
-//                                    swPermiso.isChecked();
-
+                                if (elPermiso == PackageManager.PERMISSION_DENIED) {
+                                    swPermiso.setChecked(false);
+                                }else {
+                                    swPermiso.setChecked(true);
+                                }
                                 return;
                             }
                         }
@@ -83,7 +85,6 @@ public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miho
         public void setData(final Permiso modelo, Activity activity) {
             swPermiso.setChecked(modelo.getAcceso());
             swPermiso.setText(modelo.getPermiso());
-//            swPermiso.setText(Manifest.permission.ACCESS_FINE_LOCATION);
             permisoCompleto = modelo.getPeermisoReal();
             this.activity = activity;
         }

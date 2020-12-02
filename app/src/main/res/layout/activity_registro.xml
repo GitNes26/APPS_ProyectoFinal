@@ -8,58 +8,69 @@
     android:background="@drawable/fondo_login_montes"
     tools:context=".RegistroActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#95000000"
-        android:orientation="vertical">
+        android:background="#95000000">
 
         <ImageView
+            android:id="@+id/imgUsuario"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="150sp"
+            android:layout_marginTop="50dp"
             android:src="@drawable/add_empleado"/>
         <EditText
             android:id="@+id/txtRegUsuario"
             android:inputType="text"
+            android:layout_below="@id/imgUsuario"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
             android:layout_marginHorizontal="20sp"
             android:hint="Nombre de usuario"
             android:textColorHint="#5d5d5d"
             android:textAlignment="center"
             android:textColor="#000"
-            android:autoSizeTextType="uniform"
+            android:textSize="25dp"
             android:background="@drawable/rectangulo_redondeado_semitrans"/>
         <EditText
             android:id="@+id/txtRegContra"
             android:inputType="textPassword"
+            android:layout_below="@id/txtRegUsuario"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
             android:layout_marginHorizontal="20sp"
-            android:layout_marginVertical="50dp"
-            android:hint="Introducir contrseña"
+            android:hint="Nombre de usuario"
             android:textColorHint="#5d5d5d"
             android:textAlignment="center"
             android:textColor="#000"
-            android:autoSizeTextType="uniform"
-            android:background="@drawable/rectangulo_redondeado_blanco"/>
+            android:textSize="25dp"
+            android:background="@drawable/rectangulo_redondeado_semitrans"/>
         <EditText
-            android:id="@+id/txtRegNombre"
-            android:inputType="textPassword"
+            android:id="@+id/txtRegCorreo"
+            android:inputType="text"
+            android:layout_below="@id/txtRegContra"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
             android:layout_marginHorizontal="20sp"
-            android:layout_marginVertical="50dp"
-            android:hint="Introducir contrseña"
+            android:hint="Nombre de usuario"
             android:textColorHint="#5d5d5d"
             android:textAlignment="center"
             android:textColor="#000"
-            android:autoSizeTextType="uniform"
-            android:background="@drawable/rectangulo_redondeado_blanco"/>
-    </LinearLayout>
+            android:textSize="25dp"
+            android:background="@drawable/rectangulo_redondeado_semitrans"/>
+        <Button
+            android:id="@+id/btnRegRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="30sp"
+            android:layout_below="@id/txtRegCorreo"
+            android:layout_marginTop="100dp"
+            android:text="Registrarme"
+            android:background="@drawable/rectangulo_redondeado_verde"
+            android:textSize="30sp"/>
+    </RelativeLayout>
 
 </LinearLayout>

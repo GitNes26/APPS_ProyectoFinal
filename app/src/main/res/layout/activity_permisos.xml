@@ -21,12 +21,7 @@
         android:id="@+id/rvPermisos"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
+        android:layout_weight="8"/>
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
