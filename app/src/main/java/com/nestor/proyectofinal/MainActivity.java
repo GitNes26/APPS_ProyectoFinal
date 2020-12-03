@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,13 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtUsuarioApp = findViewById(R.id.txtUsuarioApp);
         txtContraApp = findViewById(R.id.txtContra);
         txtCorreoApp = findViewById(R.id.txtCorreoApp);
-        txtCreadoApp = findViewById(R.id.txtCreadoApp);
-        txtActualizadoApp = findViewById(R.id.txtActualizadoApp);
+//        txtCreadoApp = findViewById(R.id.txtCreadoApp);
+//        txtActualizadoApp = findViewById(R.id.txtActualizadoApp);
 
         Bundle extra = getIntent().getExtras();
-        final String Correo = extra.getString("email");
+        String bCorreo = extra.getString("email");
 
-        String url = "http://192.168.0.104:8000/api/usuarios/"+Correo;
+        String url = "http://192.168.0.105:8000/api/perfil/admin@gmail.com";
+        Toast.makeText(getApplicationContext(),"antes de entrar JOR",Toast.LENGTH_LONG).show();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -61,15 +63,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }
+
                 try {
-                    JSONObject arreglo = response.getJSONObject ("usuario "+Correo);
+
+                    JSONObject arreglo = response.getJSONObject ("Users");
                     Gson gson = new Gson();
-                    txtIdApp.setText(arreglo.getString("id"));
-                    txtUsuarioApp.setText(arreglo.getString("name"));
-                    txtCorreoApp.setText( arreglo.getString("email"));
+                    txtIdApp.setText(arreglo.getString("ID"));
+                    txtUsuarioApp.setText(arreglo.getString("Usuario"));
+                    txtCorreoApp.setText( arreglo.getString("Correo"));
 //                    txtContraApp.setText( arreglo.getString("password"));
 //                    txtContraApp.setText( arreglo.getString("created_up"));
 //                    txtContraApp.setText( arreglo.getString("password"));
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -82,6 +87,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         cartero.add(request);
+        txtIdApp.setText("ID");
+        txtUsuarioApp.setText("Usuariosss");
+        txtCorreoApp.setText(bCorreo);
 
         findViewById(R.id.btnSalirApp).setOnClickListener(this);
     }
@@ -92,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtUsuarioApp.setText("Usuario");
         txtUsuarioApp.setText("Contraseña: ");
         txtCorreoApp.setText("Correo:");
-        txtCreadoApp.setText("Creado:");
-        txtActualizadoApp.setText("Actualizado:");
+//        txtCreadoApp.setText("Creado:");
+//        txtActualizadoApp.setText("Actualizado:");
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
 }

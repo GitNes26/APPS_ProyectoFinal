@@ -20,6 +20,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     EditText Correo;
@@ -46,11 +48,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnIniciar:
-//                String url = "http://192.168.0.104:8000/api/usuarios/"+Correo;
-                String url = "http://192.168.0.105:8000/api/login";
+                String url = "http://192.168.0.105:8000/api/loginAn";
 
-
-                JSONObject datos = new JSONObject();
+                final JSONObject datos = new JSONObject();
                 try {
                     datos.put("email", Correo.getText());
                     datos.put("password", Contra.getText());
@@ -58,15 +58,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
 
-                JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
+                final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            String token = response.getString("token");
-                            Log.i( "tokentl", "onResponse: ");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        Toast.makeText(getApplicationContext(), response.toString(),Toast.LENGTH_LONG).show();
+                        Log.i( "buscando", "hola");
+
+
+                        Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
+                        logeo.putExtra("email", Correo.getText());
+                        startActivity(logeo);
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -75,11 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
                 cartero.add(request);
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
-                    logeo.putExtra("email", Correo.getText());
-                    startActivity(logeo);
                 break;
             case R.id.btnRegistrar:
                 startActivity(new Intent(getApplicationContext(), RegistroActivity.class));

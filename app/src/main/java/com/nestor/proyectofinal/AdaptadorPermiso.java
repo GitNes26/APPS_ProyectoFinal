@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,32 +64,32 @@ public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miho
             swPermiso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    int pLocalizacion = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-//                    int pLlamada = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-//                    int pCamara = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-//                    int pAlmacen = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-//
-//                    if (pLocalizacion == PackageManager.PERMISSION_GRANTED &&
-//                            pLlamada == PackageManager.PERMISSION_GRANTED &&
-//                            pCamara == PackageManager.PERMISSION_GRANTED &&
-//                            pAlmacen == PackageManager.PERMISSION_GRANTED) {
-//
-//                    }
                     if (isChecked) {
                         int elPermiso = ActivityCompat.checkSelfPermission(itemView.getContext(), permisoCompleto);
                         if (elPermiso != PackageManager.PERMISSION_GRANTED) {
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                                 ActivityCompat.requestPermissions(activity, new String[]{permisoCompleto}, 26);
-                                if (elPermiso == PackageManager.PERMISSION_DENIED) {
-                                    swPermiso.setChecked(false);
-                                }else {
-                                    swPermiso.setChecked(true);
-                                }
+//                                if (elPermiso == PackageManager.PERMISSION_DENIED) {
+//                                    swPermiso.setChecked(false);
+//                                }else {
+//                                    swPermiso.setChecked(true);
+//                                }
                                 return;
                             }
                         }
-                        Toast.makeText(itemView.getContext(), permisoCompleto, Toast.LENGTH_LONG).show();
+                        Toast.makeText(itemView.getContext(), "Permiso YA Otorgado", Toast.LENGTH_LONG).show();
+                        int pLocalizacion = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+                        int pLlamada = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+                        int pCamara = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+                        int pAlmacen = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+
+                        if (pLocalizacion == PackageManager.PERMISSION_GRANTED &&
+                                pLlamada == PackageManager.PERMISSION_GRANTED &&
+                                pCamara == PackageManager.PERMISSION_GRANTED &&
+                                pAlmacen == PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.startActivity(activity, new Intent(itemView.getContext(), LoginActivity.class), null);
+                        }
                     }
                 }
             });
@@ -100,5 +101,7 @@ public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miho
             permisoCompleto = modelo.getPeermisoReal();
             this.activity = activity;
         }
+
     }
+
 }

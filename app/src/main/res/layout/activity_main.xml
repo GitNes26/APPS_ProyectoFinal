@@ -20,7 +20,7 @@
         android:id="@+id/txtIdApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/imgUsuarioApp"
+        android:layout_below="@id/imgUsuarioApp"
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="20dp"
         android:text="ID: 15"
@@ -29,7 +29,7 @@
         android:id="@+id/txtUsuarioApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imgUsuarioApp"
+        android:layout_below="@id/txtIdApp"
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="20dp"
         android:text="Usuario: JuanJo"
@@ -54,30 +54,30 @@
         android:layout_marginHorizontal="20dp"
         android:text="Email: juango@gmail.com"
         android:textSize="30sp"/>
-    <TextView
-        android:id="@+id/txtCreadoApp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtCorreoApp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Creado: 02/12/2020 05:37"
-        android:textSize="30sp"/>
-    <TextView
-        android:id="@+id/txtActualizadoApp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtCreadoApp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Actualizado: 02/12/2020 05:37"
-        android:textSize="30sp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/txtCreadoApp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/txtCorreoApp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginHorizontal="20dp"-->
+<!--        android:text="Creado: 02/12/2020 05:37"-->
+<!--        android:textSize="30sp"/>-->
+<!--    <TextView-->
+<!--        android:id="@+id/txtActualizadoApp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/txtCreadoApp"-->
+<!--        android:layout_marginTop="30dp"-->
+<!--        android:layout_marginHorizontal="20dp"-->
+<!--        android:text="Actualizado: 02/12/2020 05:37"-->
+<!--        android:textSize="30sp"/>-->
     <Button
         android:id="@+id/btnSalirApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="50dp"
         android:layout_marginTop="30dp"
         android:layout_marginHorizontal="20dp"
         android:text="Salir"
