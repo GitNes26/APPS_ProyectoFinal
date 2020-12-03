@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,11 +46,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnIniciar:
-                String url = "http://192.168.0.104:8000/api/usuarios/"+Correo;
+//                String url = "http://192.168.0.104:8000/api/usuarios/"+Correo;
+                String url = "http://192.168.0.105:8000/api/login";
+
 
                 JSONObject datos = new JSONObject();
                 try {
-                    datos.put("email",Correo.getText());
+                    datos.put("email", Correo.getText());
+                    datos.put("password", Contra.getText());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -57,7 +61,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        try {
+                            String token = response.getString("token");
+                            Log.i( "tokentl", "onResponse: ");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override

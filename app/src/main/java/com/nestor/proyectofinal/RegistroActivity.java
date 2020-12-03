@@ -44,8 +44,8 @@ public class RegistroActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String url = "http://192.168.0.104:8000/api/registro";
-                String url = "http://192.168.0.104:8000/api/usuarios";
+                String url = "http://192.168.0.105:8000/api/registro";
+//                String url = "http://192.168.0.105:8000/api/usuarios";
 
                 JSONObject datos = new JSONObject();
                 try {
@@ -59,8 +59,8 @@ public class RegistroActivity extends AppCompatActivity {
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(RegistroActivity.this, (CharSequence) response, Toast.LENGTH_LONG).show();
                         Log.i("Request", response.toString());
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -69,6 +69,8 @@ public class RegistroActivity extends AppCompatActivity {
                     }
                 });
                 cartero.add(request);
+
+                Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
 
                 Usuario.setText("");
                 Contra.setText("");

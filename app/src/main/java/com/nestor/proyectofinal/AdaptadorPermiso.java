@@ -2,6 +2,7 @@ package com.nestor.proyectofinal;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -62,6 +63,17 @@ public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miho
             swPermiso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    int pLocalizacion = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//                    int pLlamada = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//                    int pCamara = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//                    int pAlmacen = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//
+//                    if (pLocalizacion == PackageManager.PERMISSION_GRANTED &&
+//                            pLlamada == PackageManager.PERMISSION_GRANTED &&
+//                            pCamara == PackageManager.PERMISSION_GRANTED &&
+//                            pAlmacen == PackageManager.PERMISSION_GRANTED) {
+//
+//                    }
                     if (isChecked) {
                         int elPermiso = ActivityCompat.checkSelfPermission(itemView.getContext(), permisoCompleto);
                         if (elPermiso != PackageManager.PERMISSION_GRANTED) {
