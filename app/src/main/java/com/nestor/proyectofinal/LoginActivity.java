@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private RequestQueue cartero;
     private VolleyS mVolleyS;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(getApplicationContext(), response.toString(),Toast.LENGTH_LONG).show();
-                        Log.i( "buscando", "hola");
-
+                        String datosUsuario = response.toString();
 
                         Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
                         logeo.putExtra("email", Correo.getText());
@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Correo y/o Contraseña invalidos",Toast.LENGTH_LONG).show();
                     }
                 });
                 cartero.add(request);

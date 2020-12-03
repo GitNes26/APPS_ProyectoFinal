@@ -59,19 +59,22 @@ public class RegistroActivity extends AppCompatActivity {
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.i("Request", response.toString());
-
+                        Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
+                        Usuario.setText("");
+                        Contra.setText("");
+                        Correo.setText("");
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Favor de llenar los datos solicitados.", Toast.LENGTH_LONG).show();
                     }
                 });
                 cartero.add(request);
 
                 Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
-
                 Usuario.setText("");
                 Contra.setText("");
                 Correo.setText("");

@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                } catch (JSONException e) {
 //                    e.printStackTrace();
 //                }
+                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
                 try {
 
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "nada pescao",Toast.LENGTH_LONG).show();
                 }
 
             }
