@@ -39,7 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginHorizontal="20sp"
-                android:hint="Correo"
+                android:hint="Correo electronico"
                 android:textColorHint="#5d5d5d"
                 android:textAlignment="center"
                 android:textColor="#000"

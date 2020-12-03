@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -59,6 +60,7 @@ public class RegistroActivity extends AppCompatActivity {
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        Log.i("TAG", response.toString());
                         Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
                         Usuario.setText("");
                         Contra.setText("");
@@ -69,16 +71,18 @@ public class RegistroActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Favor de llenar los datos solicitados.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
                     }
-                });
+                });request.setRetryPolicy(new DefaultRetryPolicy(500000,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 cartero.add(request);
 
-                Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
-                Usuario.setText("");
-                Contra.setText("");
-                Correo.setText("");
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//                Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
+//                Usuario.setText("");
+//                Contra.setText("");
+//                Correo.setText("");
+//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
 

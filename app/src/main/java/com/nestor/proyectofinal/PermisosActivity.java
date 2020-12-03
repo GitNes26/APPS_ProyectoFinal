@@ -74,6 +74,8 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
                     if (permiso == PackageManager.PERMISSION_DENIED)
                         break;
                 }
+                if ( acceso == PackageManager.PERMISSION_GRANTED)
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         }
     }
