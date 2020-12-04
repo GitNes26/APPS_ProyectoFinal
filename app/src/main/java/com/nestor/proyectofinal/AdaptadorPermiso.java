@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miholder> {
@@ -79,17 +81,17 @@ public class AdaptadorPermiso extends RecyclerView.Adapter<AdaptadorPermiso.Miho
                             }
                         }
                         Toast.makeText(itemView.getContext(), "Permiso YA Otorgado", Toast.LENGTH_LONG).show();
-                        int pLocalizacion = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-                        int pLlamada = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-                        int pCamara = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-                        int pAlmacen = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
-
-                        if (pLocalizacion == PackageManager.PERMISSION_GRANTED &&
-                                pLlamada == PackageManager.PERMISSION_GRANTED &&
-                                pCamara == PackageManager.PERMISSION_GRANTED &&
-                                pAlmacen == PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.startActivity(activity, new Intent(itemView.getContext(), LoginActivity.class), null);
-                        }
+//                        int pLocalizacion = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//                        int pLlamada = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//                        int pCamara = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//                        int pAlmacen = ActivityCompat.checkSelfPermission(itemView.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+//
+//                        if (pLocalizacion == PackageManager.PERMISSION_GRANTED &&
+//                                pLlamada == PackageManager.PERMISSION_GRANTED &&
+//                                pCamara == PackageManager.PERMISSION_GRANTED &&
+//                                pAlmacen == PackageManager.PERMISSION_GRANTED) {
+//                            ActivityCompat.startActivity(activity, new Intent(itemView.getContext(), LoginActivity.class), null);
+//                        }
                     }
                 }
             });

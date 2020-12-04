@@ -78,27 +78,31 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginBottom="30sp">
+
             <Button
                 android:id="@+id/btnIniciar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="30sp"
-                android:text="Iniciar Sesion"
                 android:background="@drawable/rectangulo_redondeado_azul"
-                android:textSize="30sp"/>
+                android:text="Iniciar Sesion"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
+
             <Button
                 android:id="@+id/btnRegistrar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="30sp"
-                android:text="Registrarme"
                 android:background="@drawable/rectangulo_redondeado_morado"
-                android:textSize="30sp"/>
+                android:text="Registrarme"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout

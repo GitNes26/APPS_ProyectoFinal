@@ -33,6 +33,8 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
     private RecyclerView rvPermiso;
 //    private RequestQueue cartero;
 //    private VolleyS mVolleyS;
+    int permisosTotales =0;
+
 
 
     @Override
@@ -40,7 +42,7 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permisos);
 
-        findViewById(R.id.btnLogin).setOnClickListener(this);
+//        findViewById(R.id.btnLogin).setOnClickListener(this);
 
         rvPermiso = findViewById(R.id.rvPermisos);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -62,7 +64,7 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.i("permisos_nombre", Arrays.deepToString(permissions));
         Log.i("permisos_acceso", Arrays.toString(grantResults));
 
@@ -70,20 +72,51 @@ public class PermisosActivity extends AppCompatActivity implements View.OnClickL
             if (permissions.length>=1){
                 int acceso=-1;
                 for (int permiso:grantResults){
-                    permiso = acceso;
-                    if (permiso == PackageManager.PERMISSION_DENIED)
-                        break;
+                    acceso = permiso;
+                    Log.i("permisos_accesomovil", String.valueOf(acceso));
+                    if (acceso == PackageManager.PERMISSION_GRANTED){
+                        permisosTotales ++;
+                    }
+                    Log.i("permisos_Totales", String.valueOf(permisosTotales));
                 }
-                if ( acceso == PackageManager.PERMISSION_GRANTED)
+                if ( permisosTotales == 4) {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
+                }
+//                    if (acceso == PackageManager.PERMISSION_DENIED){
+//                        break;
+//                    }
+//                }
+//                if ( acceso == PackageManager.PERMISSION_GRANTED) {
+//                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//                }
             }
         }
     }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//
+//        Log.i("permisos_nombre", Arrays.deepToString(permissions));
+//        Log.i("permisos_acceso", Arrays.toString(grantResults));
+//
+//        if (requestCode==26){
+//            if (permissions.length>=1){
+//                int acceso=-1;
+//                for (int permiso:grantResults){
+//                    permiso = acceso;
+//                    if (permiso == PackageManager.PERMISSION_DENIED)
+//                        break;
+//                }
+//                if ( acceso == PackageManager.PERMISSION_GRANTED)
+//                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//            }
+//        }
+//    }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnLogin){
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }
+//        if (v.getId() == R.id.btnLogin){
+//            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//        }
     }
 }

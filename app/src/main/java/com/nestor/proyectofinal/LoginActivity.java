@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -17,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,11 +65,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(getApplicationContext(), response.toString(),Toast.LENGTH_LONG).show();
-                        String datosUsuario = response.toString();
-
+                        Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_LONG).show();
                         Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
-                        logeo.putExtra("email", Correo.getText());
+                        logeo.putExtra("email", Correo.getText().toString());
                         startActivity(logeo);
                     }
                 }, new Response.ErrorListener() {

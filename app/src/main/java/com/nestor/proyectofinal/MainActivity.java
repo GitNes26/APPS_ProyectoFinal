@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -42,43 +43,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgUsuarioApp = findViewById(R.id.imgUsuarioApp);
         txtIdApp = findViewById(R.id.txtIdApp);
         txtUsuarioApp = findViewById(R.id.txtUsuarioApp);
-        txtContraApp = findViewById(R.id.txtContra);
+//        txtContraApp = findViewById(R.id.txtContra);
         txtCorreoApp = findViewById(R.id.txtCorreoApp);
-//        txtCreadoApp = findViewById(R.id.txtCreadoApp);
-//        txtActualizadoApp = findViewById(R.id.txtActualizadoApp);
+        txtCreadoApp = findViewById(R.id.txtCreadoApp);
+        txtActualizadoApp = findViewById(R.id.txtActualizadoApp);
 
         Bundle extra = getIntent().getExtras();
         String bCorreo = extra.getString("email");
 
-        String url = "http://192.168.0.105:8000/api/perfil/admin@gmail.com";
-        Toast.makeText(getApplicationContext(),"antes de entrar JOR",Toast.LENGTH_LONG).show();
+        String url = "http://192.168.0.105:8000/api/perfil/"+bCorreo;
+//        Toast.makeText(getApplicationContext(),bCorreo,Toast.LENGTH_LONG).show();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-//                try {
-//                    Gson gson = new Gson();
-//                    JSONObject arreglo = (JSONObject) response.get("usuario");
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
+
+//                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
                 try {
-
-                    JSONObject arreglo = response.getJSONObject ("Users");
+                    JSONArray arreglo = response.getJSONArray("data");
+                    JSONObject usuario = arreglo.getJSONObject (0);
+//                    Toast.makeText(getApplicationContext(), usuario.toString(), Toast.LENGTH_LONG).show();
                     Gson gson = new Gson();
-                    txtIdApp.setText(arreglo.getString("ID"));
-                    txtUsuarioApp.setText(arreglo.getString("Usuario"));
-                    txtCorreoApp.setText( arreglo.getString("Correo"));
+                    txtIdApp.setText("ID: "+usuario.getString("id"));
+                    txtUsuarioApp.setText("Nombre: "+usuario.getString("name"));
+                    txtCorreoApp.setText( "Correo: "+usuario.getString("email"));
 //                    txtContraApp.setText( arreglo.getString("password"));
-//                    txtContraApp.setText( arreglo.getString("created_up"));
-//                    txtContraApp.setText( arreglo.getString("password"));
+                    txtContraApp.setText( "Creado: "+usuario.getString("created_up"));
+                    txtContraApp.setText( "Actualizado"+usuario.getString("password"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "nada pescao",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Error: "+e.toString(),Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -88,10 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 error.printStackTrace();
             }
         });
+
         cartero.add(request);
-        txtIdApp.setText("ID");
-        txtUsuarioApp.setText("Usuariosss");
-        txtCorreoApp.setText(bCorreo);
 
         findViewById(R.id.btnSalirApp).setOnClickListener(this);
     }
@@ -102,8 +96,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtUsuarioApp.setText("Usuario");
         txtUsuarioApp.setText("Contraseña: ");
         txtCorreoApp.setText("Correo:");
-//        txtCreadoApp.setText("Creado:");
-//        txtActualizadoApp.setText("Actualizado:");
+        txtCreadoApp.setText("Creado:");
+        txtActualizadoApp.setText("Actualizado:");
         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
     }
 }

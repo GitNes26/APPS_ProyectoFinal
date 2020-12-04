@@ -71,7 +71,7 @@ public class RegistroActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Favor de llenar los campos solicitados", Toast.LENGTH_LONG).show();
                     }
                 });request.setRetryPolicy(new DefaultRetryPolicy(500000,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
