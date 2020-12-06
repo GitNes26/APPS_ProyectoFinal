@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mVolleyS = VolleyS.getInstance(this.getApplicationContext());
         cartero = mVolleyS.getRequestQueue();
 
-        Correo = findViewById(R.id.txtCorreo);
+        Correo = findViewById(R.id.txtNombre);
         Contra = findViewById(R.id.txtContra);
 
         findViewById(R.id.btnIniciar).setOnClickListener(this);
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnIniciar:
-                String url = "http://192.168.0.105:8000/api/loginAn";
+                String url = "http://192.168.0.106:8000/api/loginAn";
 
                 final JSONObject datos = new JSONObject();
                 try {

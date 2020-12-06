@@ -1,76 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/fondo_login_montes"
+    android:filterTouchesWhenObscured="false"
     tools:context=".RegistroActivity">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#95000000">
+        android:background="#0DFFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imgUsuario"
-            android:layout_width="match_parent"
-            android:layout_height="150sp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginTop="50dp"
-            android:src="@drawable/add_empleado"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/add_empleado" />
+
         <EditText
             android:id="@+id/txtRegUsuario"
-            android:inputType="text"
-            android:layout_below="@id/imgUsuario"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginHorizontal="20sp"
-            android:hint="Nombre de usuario"
-            android:textColorHint="#5d5d5d"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="25dp"
-            android:background="@drawable/rectangulo_redondeado_semitrans"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/colorAzulOscuro"
+            android:ems="10"
+            android:hint="Nombre"
+            android:inputType="text"
+            android:textColor="@color/colorAzulOscuro"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#676464"
+            android:textColorLink="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgUsuario" />
+
         <EditText
             android:id="@+id/txtRegContra"
-            android:inputType="textPassword"
-            android:layout_below="@id/txtRegUsuario"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginHorizontal="20sp"
-            android:hint="Constraseña"
-            android:textColorHint="#5d5d5d"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="25dp"
-            android:background="@drawable/rectangulo_redondeado_semitrans"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/colorAzulOscuro"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textColor="@color/colorAzulOscuro"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#676464"
+            android:textColorLink="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegUsuario" />
+
         <EditText
             android:id="@+id/txtRegCorreo"
-            android:inputType="text"
-            android:layout_below="@id/txtRegContra"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginHorizontal="20sp"
-            android:hint="Correo electronico"
-            android:textColorHint="#5d5d5d"
-            android:textAlignment="center"
-            android:textColor="#000"
-            android:textSize="25dp"
-            android:background="@drawable/rectangulo_redondeado_semitrans"/>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/colorAzulOscuro"
+            android:ems="10"
+            android:hint="Correo"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorAzulOscuro"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#676464"
+            android:textColorLink="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegContra" />
+
         <Button
             android:id="@+id/btnRegRegistro"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginHorizontal="30sp"
-            android:layout_below="@id/txtRegCorreo"
-            android:layout_marginTop="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/bg_solido_verde"
             android:text="Registrarme"
-            android:background="@drawable/rectangulo_redondeado_verde"
-            android:textSize="30sp"/>
-    </RelativeLayout>
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtRegCorreo" />
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

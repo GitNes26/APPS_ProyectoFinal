@@ -37,22 +37,22 @@ public class RegistroActivity extends AppCompatActivity {
         mVolleyS = VolleyS.getInstance(this.getApplicationContext());
         cartero = mVolleyS.getRequestQueue();
 
-        Usuario = (EditText) findViewById(R.id.txtRegUsuario);
-        Contra = (EditText) findViewById(R.id.txtRegContra);
-        Correo = (EditText) findViewById(R.id.txtRegCorreo);
-        btnRegistrar = (Button) findViewById(R.id.btnRegRegistro);
+        Usuario = findViewById(R.id.txtRegUsuario);
+        Contra = findViewById(R.id.txtRegContra);
+        Correo = findViewById(R.id.txtRegCorreo);
+        btnRegistrar = findViewById(R.id.btnRegRegistro);
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://192.168.0.105:8000/api/registro";
+                String url = "http://192.168.0.106:8000/api/registro";
 //                String url = "http://192.168.0.105:8000/api/usuarios";
 
                 JSONObject datos = new JSONObject();
                 try {
-                    datos.put("name", Usuario.getText());
-                    datos.put("email", Correo.getText());
-                    datos.put("password", Contra.getText());
+                    datos.put("name", Usuario.getText().toString());
+                    datos.put("email", Correo.getText().toString());
+                    datos.put("password", Contra.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -77,12 +77,6 @@ public class RegistroActivity extends AppCompatActivity {
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 cartero.add(request);
-
-//                Toast.makeText(getApplicationContext(), "Usuario registrado.", Toast.LENGTH_LONG).show();
-//                Usuario.setText("");
-//                Contra.setText("");
-//                Correo.setText("");
-//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         });
 

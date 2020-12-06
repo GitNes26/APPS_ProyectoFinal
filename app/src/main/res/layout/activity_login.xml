@@ -1,114 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="12"
     android:background="@drawable/fondo_login_montes"
+    android:filterTouchesWhenObscured="false"
     tools:context=".LoginActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#32000000"
-        android:orientation="vertical"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100sp"
-                android:src="@drawable/logo_domo"
-                android:background="@drawable/ciruclo_blanco"/>
-        </LinearLayout>
+        android:background="#1AFFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
-            <EditText
-                android:id="@+id/txtCorreo"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="20sp"
-                android:hint="Correo electronico"
-                android:textColorHint="#5d5d5d"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:autoSizeTextType="uniform"
-                android:background="@drawable/rectangulo_redondeado_blanco"/>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/ciruclo_blanco"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo_domo" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/txtNombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="1"
-            android:layout_weight="1"
-            android:gravity="clip_horizontal">
-            <EditText
-                android:id="@+id/txtContra"
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginHorizontal="20sp"
-                android:hint="Contraseña"
-                android:textColorHint="#5d5d5d"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:autoSizeTextType="uniform"
-                android:background="@drawable/rectangulo_redondeado_blanco"/>
-        </LinearLayout>
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/colorAzulOscuro"
+            android:ems="10"
+            android:hint="Correo Electronico"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/colorAzulOscuro"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#676464"
+            android:textColorLink="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/txtContra"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"></LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/colorAzulOscuro"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textColor="@color/colorAzulOscuro"
+            android:textColorHighlight="#FFFFFF"
+            android:textColorHint="#676464"
+            android:textColorLink="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtNombre" />
 
-        <LinearLayout
+        <Button
+            android:id="@+id/btnIniciar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="30sp">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="200dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/bg_solid_azul_oscuro"
+            android:text="Iniciar Sesion"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtContra" />
 
-            <Button
-                android:id="@+id/btnIniciar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="30sp"
-                android:background="@drawable/rectangulo_redondeado_azul"
-                android:text="Iniciar Sesion"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp" />
-        </LinearLayout>
-        <LinearLayout
+        <Button
+            android:id="@+id/btnRegistrar"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/bg_borde_azul_oscuro"
+            android:text="Crear Cuenta"
+            android:textColor="@color/colorAzulOscuro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnIniciar" />
 
-            <Button
-                android:id="@+id/btnRegistrar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="30sp"
-                android:background="@drawable/rectangulo_redondeado_morado"
-                android:text="Registrarme"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp" />
-        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"></LinearLayout>
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

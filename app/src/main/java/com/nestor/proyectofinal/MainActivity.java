@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Bundle extra = getIntent().getExtras();
         String bCorreo = extra.getString("email");
 
-        String url = "http://192.168.0.105:8000/api/perfil/"+bCorreo;
+        String url = "http://192.168.0.106:8000/api/perfil/"+bCorreo;
 //        Toast.makeText(getApplicationContext(),bCorreo,Toast.LENGTH_LONG).show();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
