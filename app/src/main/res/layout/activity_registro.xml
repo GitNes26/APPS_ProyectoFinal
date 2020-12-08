@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imgUsuario"
+            android:id="@+id/imgUsuarioApp"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="50dp"
@@ -45,7 +45,7 @@
             android:textColorLink="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imgUsuario" />
+            app:layout_constraintTop_toBottomOf="@+id/imgUsuarioApp" />
 
         <EditText
             android:id="@+id/txtRegContra"

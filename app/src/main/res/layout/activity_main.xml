@@ -1,78 +1,296 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5F878A"
+    android:background="#DF7878"
+    android:textDirection="firstStrongRtl"
     tools:context=".MainActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="409dp"
+        android:layout_height="100dp"
+        android:background="#EF9F9F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/imgPerro"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ciruclo_blanco"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/dog" />
+
+        <TextView
+            android:id="@+id/Usuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Usuario:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imgUsuarioApp"
+            app:layout_constraintTop_toTopOf="@+id/imgUsuarioApp" />
+
+        <TextView
+            android:id="@+id/txtUsuario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Mi Nombre"
+            android:textStyle="italic"
+            app:layout_constraintStart_toEndOf="@+id/Usuario"
+            app:layout_constraintTop_toTopOf="@+id/Usuario" />
+
+        <TextView
+            android:id="@+id/Correo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Correo:"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/Usuario"
+            app:layout_constraintTop_toBottomOf="@+id/Usuario" />
+
+        <TextView
+            android:id="@+id/txtCorreo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="micorreo@gmail.com"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="@+id/txtUsuario"
+            app:layout_constraintTop_toTopOf="@+id/Correo" />
+
+        <ImageView
+            android:id="@+id/imgUsuarioApp"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ciruclo_blanco"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/alumno" />
+
+        <TextView
+            android:id="@+id/Mascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text=":Mascota"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/imgPerro"
+            app:layout_constraintEnd_toStartOf="@+id/imgPerro" />
+
+        <TextView
+            android:id="@+id/txtMascota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="right"
+            android:text="Mayla"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/Mascota"
+            app:layout_constraintEnd_toStartOf="@+id/Mascota" />
+
+        <ImageButton
+            android:id="@+id/btnEditar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:clickable="true"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@+id/imgUsuarioApp"
+            app:layout_constraintStart_toStartOf="@+id/Correo"
+            app:srcCompat="@drawable/editar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
-        android:id="@+id/imgUsuarioApp"
-        android:layout_marginTop="20dp"
-        android:layout_width="150sp"
-        android:layout_height="150sp"
+        android:id="@+id/imgContenedor"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/ciruclo_blanco"
-        android:src="@drawable/alumno"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@drawable/alimentador_de_mascotas" />
+
+    <ImageView
+        android:id="@+id/imgTermometro"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ciruclo_blanco"
+        app:layout_constraintEnd_toEndOf="@+id/estatusTemperatua"
+        app:layout_constraintStart_toStartOf="@+id/estatusTemperatua"
+        app:layout_constraintTop_toBottomOf="@+id/estatusTemperatua"
+        app:srcCompat="@drawable/temperatura_alta" />
+
+    <ImageView
+        android:id="@+id/imgTazonComida"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/ciruclo_blanco"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgContenedor"
+        app:srcCompat="@drawable/dog_food" />
+
+    <ImageView
+        android:id="@+id/imgPerroSensor"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/ciruclo_blanco"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgTazonComida"
+        app:srcCompat="@drawable/dog_sensor" />
+
     <TextView
-        android:id="@+id/txtIdApp"
-        android:layout_width="match_parent"
+        android:id="@+id/EstatusContenedor"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/imgUsuarioApp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="ID:"
-        android:textAlignment="center"
-        android:textSize="35sp"/>
+        android:layout_marginStart="24dp"
+        android:text="Cantidad de Alimento:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgContenedor"
+        app:layout_constraintTop_toTopOf="@+id/imgContenedor" />
+
     <TextView
-        android:id="@+id/txtUsuarioApp"
-        android:layout_width="match_parent"
+        android:id="@+id/estatusTemperatua"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtIdApp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Usuario:"
-        android:textAlignment="center"
-        android:textSize="35sp"/>
+        android:layout_marginStart="196dp"
+        android:layout_marginTop="44dp"
+        android:text="Cantidad de Alimento:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgContenedor"
+        app:layout_constraintTop_toTopOf="@+id/imgContenedor" />
+
     <TextView
-        android:id="@+id/txtCorreoApp"
-        android:layout_width="match_parent"
+        android:id="@+id/estatusComida"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtUsuarioApp"
-        android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Email:"
-        android:textAlignment="center"
-        android:textSize="22sp"/>
+        android:layout_marginStart="24dp"
+        android:text="Estatus de alimento:"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgTazonComida"
+        app:layout_constraintTop_toTopOf="@+id/imgTazonComida" />
+
     <TextView
-        android:id="@+id/txtCreadoApp"
-        android:layout_width="match_parent"
+        android:id="@+id/CantidadComidas"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtCorreoApp"
-        android:layout_marginTop="120dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Creado: 02/12/2020 05:37"
-        android:textSize="20sp"/>
+        android:layout_marginStart="16dp"
+        android:text="Cantidad de Idas al Tazon"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgPerroSensor"
+        app:layout_constraintTop_toTopOf="@+id/imgPerroSensor" />
+
     <TextView
-        android:id="@+id/txtActualizadoApp"
-        android:layout_width="match_parent"
+        android:id="@+id/cantidadComidas"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtCreadoApp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
-        android:text="Actualizado: 02/12/2020 05:37"
-        android:textSize="20sp"/>
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="132dp"
+        android:text="Cantidad de Idas al Tazon"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/imgPerroSensor"
+        app:layout_constraintTop_toTopOf="@+id/imgPerroSensor" />
+
+    <TextView
+        android:id="@+id/txtKilogramos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2Kg"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/imgContenedor"
+        app:layout_constraintStart_toStartOf="@+id/EstatusContenedor"
+        app:layout_constraintTop_toBottomOf="@+id/EstatusContenedor" />
+
+    <TextView
+        android:id="@+id/txtGrados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="20 °C"
+        android:textSize="32sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/imgTermometro"
+        app:layout_constraintStart_toStartOf="@+id/imgTermometro"
+        app:layout_constraintTop_toBottomOf="@+id/imgTermometro" />
+
+    <TextView
+        android:id="@+id/txtAlimentoTazon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Con Alimento"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/estatusComida"
+        app:layout_constraintTop_toBottomOf="@+id/estatusComida" />
+
+    <TextView
+        android:id="@+id/txtCantidadComidas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:text="5 idas al Tazon"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/CantidadComidas"
+        app:layout_constraintTop_toBottomOf="@+id/CantidadComidas" />
+
+    <TextView
+        android:id="@+id/estatusIgual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="="
+        android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="@+id/txtKilogramos"
+        app:layout_constraintTop_toTopOf="@+id/txtKilogramos" />
+
+    <TextView
+        android:id="@+id/txtPorcentajeComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="100%"
+        android:textStyle="italic"
+        app:layout_constraintStart_toEndOf="@+id/estatusIgual"
+        app:layout_constraintTop_toTopOf="@+id/txtKilogramos" />
+
+    <Switch
+        android:id="@+id/btnServirComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cantidadComidas"
+        tools:ignore="MissingConstraints" />
+
     <Button
         android:id="@+id/btnSalirApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rectangulo_redondeado_blanco"
         android:text="Salir"
         android:textSize="30sp"
-        android:background="@drawable/rectangulo_redondeado_blanco"/>
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
