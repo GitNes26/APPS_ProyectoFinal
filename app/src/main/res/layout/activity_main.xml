@@ -270,14 +270,14 @@
         app:layout_constraintStart_toEndOf="@+id/estatusIgual"
         app:layout_constraintTop_toTopOf="@+id/txtKilogramos" />
 
-    <Switch
-        android:id="@+id/btnServirComida"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cantidadComidas"
-        tools:ignore="MissingConstraints" />
+<!--    <Switch-->
+<!--        android:id="@+id/btnServirComida"-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/cantidadComidas"-->
+<!--        tools:ignore="MissingConstraints" />-->
 
     <Button
         android:id="@+id/btnSalirApp"

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,11 +25,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgUsuarioApp;
-    TextView txtIdApp, txtUsuarioApp, txtContraApp, txtCorreoApp, txtCreadoApp, txtActualizadoApp;
+    TextView txtIdApp, txtUsuarioApp, txtContraApp, txtCorreoApp, txtCreadoApp, txtActualizadoApp,
+            txtMascota;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
 
@@ -45,13 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtUsuarioApp = findViewById(R.id.txtUsuario);
 //        txtContraApp = findViewById(R.id.txtContra);
         txtCorreoApp = findViewById(R.id.txtCorreo);
+        txtMascota = findViewById(R.id.txtMascota);
 //        txtCreadoApp = findViewById(R.id.txtCreadoApp);
 //        txtActualizadoApp = findViewById(R.id.txtActualizadoApp);
 
         Bundle extra = getIntent().getExtras();
         String bCorreo = extra.getString("email");
+        final String bToken = extra.getString("token");
 
-        String url = "http://192.168.0.106:8000/api/perfil/"+bCorreo;
+//        String url = "http://192.168.0.106:8000/api/perfil/"+bCorreo;
+        String url = "http://192.168.0.106:8000/api/usuarios";
 //        Toast.makeText(getApplicationContext(),bCorreo,Toast.LENGTH_LONG).show();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    txtIdApp.setText("ID: "+usuario.getString("id"));
                     txtUsuarioApp.setText(usuario.getString("name"));
                     txtCorreoApp.setText(usuario.getString("email"));
+                    txtMascota.setText(bToken);
 //                    txtContraApp.setText( arreglo.getString("password"));
 //                    txtContraApp.setText( "Creado: "+usuario.getString("created_up"));
 //                    txtContraApp.setText( "Actualizado"+usuario.getString("password"));
@@ -83,7 +91,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        });
+        }) ;//{
+
+//            //This is for Headers If You Needed
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("Content-Type", "application/json; charset=UTF-8");
+//                params.put("token", bToken);
+//                return params;
+//            }
+
+            //Pass Your Parameters here
+//            @Override
+//            protected Map<String, String> getParams() {
+//                Map<String, String> params = new HashMap<String, String>();
+//                params.put("User", UserName);
+//                params.put("Pass", PassWord);
+//                return params;
+//            }
+//        };
 
         cartero.add(request);
 

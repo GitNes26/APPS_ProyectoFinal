@@ -52,7 +52,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btnIniciar:
-                String url = "http://192.168.0.106:8000/api/loginAn";
+//                String url = "http://192.168.0.106:8000/api/loginAn";
+                String url = "http://192.168.0.106:8000/api/login";
 
                 final JSONObject datos = new JSONObject();
                 try {
@@ -65,10 +66,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, datos, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_LONG).show();
-                        Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
-                        logeo.putExtra("email", Correo.getText().toString());
-                        startActivity(logeo);
+                        try {
+                            final String token = response.getString("token");
+                            Toast.makeText(getApplicationContext(), "Sesion Iniciada" + token,Toast.LENGTH_LONG).show();
+                            Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
+                            logeo.putExtra("email", Correo.getText().toString());
+                            logeo.putExtra("token", token);
+                            startActivity(logeo);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
