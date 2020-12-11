@@ -3,7 +3,9 @@ package com.nestor.proyectofinal;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,30 +54,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtMascota = findViewById(R.id.txtMascota);
 //        txtCreadoApp = findViewById(R.id.txtCreadoApp);
 //        txtActualizadoApp = findViewById(R.id.txtActualizadoApp);
+        final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
+
 
         Bundle extra = getIntent().getExtras();
-        String bCorreo = extra.getString("email");
-        final String bToken = extra.getString("token");
+//        String bCorreo = extra.getString("email");
+////        final String bToken = extra.getString("token");
 
 //        String url = "http://192.168.0.106:8000/api/perfil/"+bCorreo;
         String url = "http://192.168.0.106:8000/api/usuarios";
 //        Toast.makeText(getApplicationContext(),bCorreo,Toast.LENGTH_LONG).show();
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        Toast.makeText(MainActivity.this, appSharedPrefs.getString("TOKEN_KEY","NO_TOKEN").toString(), Toast.LENGTH_SHORT).show();
+        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
 //                Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_LONG).show();
 
                 try {
-                    JSONArray arreglo = response.getJSONArray("data");
-                    JSONObject usuario = arreglo.getJSONObject (0);
+                    JSONObject usuario = response.getJSONObject ("data");
 //                    Toast.makeText(getApplicationContext(), usuario.toString(), Toast.LENGTH_LONG).show();
                     Gson gson = new Gson();
 //                    txtIdApp.setText("ID: "+usuario.getString("id"));
                     txtUsuarioApp.setText(usuario.getString("name"));
                     txtCorreoApp.setText(usuario.getString("email"));
-                    txtMascota.setText(bToken);
+//                    txtMascota.setText(bToken);
 //                    txtContraApp.setText( arreglo.getString("password"));
 //                    txtContraApp.setText( "Creado: "+usuario.getString("created_up"));
 //                    txtContraApp.setText( "Actualizado"+usuario.getString("password"));
@@ -91,7 +94,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        }) ;//{
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + appSharedPrefs.getString("TOKEN_KEY", "NO_TOKEN").toString());
+                Log.d("headers", headers.toString());
+                return headers;
+            }
+        };//{
 
 //            //This is for Headers If You Needed
 //            @Override

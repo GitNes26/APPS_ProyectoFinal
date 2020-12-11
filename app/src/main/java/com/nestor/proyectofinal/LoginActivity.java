@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -32,7 +33,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private RequestQueue cartero;
     private VolleyS mVolleyS;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +46,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.btnIniciar).setOnClickListener(this);
         findViewById(R.id.btnRegistrar).setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v) {
+        SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
+        final SharedPreferences.Editor appEditor = appSharedPrefs.edit();
         switch (v.getId()){
             case R.id.btnIniciar:
 //                String url = "http://192.168.0.106:8000/api/loginAn";
@@ -68,10 +71,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(JSONObject response) {
                         try {
                             final String token = response.getString("token");
-                            Toast.makeText(getApplicationContext(), "Sesion Iniciada" + token,Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_LONG).show();
+                            appEditor.putString("TOKEN_KEY", token);
+                            appEditor.commit();
                             Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
-                            logeo.putExtra("email", Correo.getText().toString());
-                            logeo.putExtra("token", token);
+//                            logeo.putExtra("email", Correo.getText().toString());
+//                            logeo.putExtra("token", token);
                             startActivity(logeo);
                         } catch (JSONException e) {
                             e.printStackTrace();
