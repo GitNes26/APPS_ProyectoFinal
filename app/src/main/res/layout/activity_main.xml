@@ -116,7 +116,7 @@
         android:id="@+id/imgContenedor"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/ciruclo_blanco"
         app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +183,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Estatus de alimento:"
+        android:text="Estatus del Tazon:"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -218,7 +218,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2Kg"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="@+id/imgContenedor"
         app:layout_constraintStart_toStartOf="@+id/EstatusContenedor"
@@ -315,15 +315,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/bntActualizar"
+    <Button
+        android:id="@+id/btnActualizar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:srcCompat="@android:drawable/stat_notify_sync" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"/>
+<!--        app:srcCompat="@android:drawable/stat_notify_sync" />-->
 
     <Switch
         android:id="@+id/switchRellenador"

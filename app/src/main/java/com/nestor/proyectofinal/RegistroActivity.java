@@ -22,9 +22,7 @@ import org.json.JSONObject;
 
 public class RegistroActivity extends AppCompatActivity {
 
-    EditText Usuario;
-    EditText Contra;
-    EditText Correo;
+    EditText Usuario, Contra, Correo, Mascota;
     Button btnRegistrar;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
@@ -40,12 +38,14 @@ public class RegistroActivity extends AppCompatActivity {
         Usuario = findViewById(R.id.txtRegUsuario);
         Contra = findViewById(R.id.txtRegContra);
         Correo = findViewById(R.id.txtRegCorreo);
+        Mascota = findViewById(R.id.txtRegMascota);
         btnRegistrar = findViewById(R.id.btnRegRegistro);
 
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://192.168.0.106:8000/api/registro";
+//                String url = "http://192.168.0.106:8000/api/registro";
+                String url = "http://192.168.0.7:8000/api/registro";
 //                String url = "http://192.168.0.105:8000/api/usuarios";
 
                 JSONObject datos = new JSONObject();
@@ -53,6 +53,7 @@ public class RegistroActivity extends AppCompatActivity {
                     datos.put("name", Usuario.getText().toString());
                     datos.put("email", Correo.getText().toString());
                     datos.put("password", Contra.getText().toString());
+                    datos.put("perro", Mascota.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -65,6 +66,7 @@ public class RegistroActivity extends AppCompatActivity {
                         Usuario.setText("");
                         Contra.setText("");
                         Correo.setText("");
+                        Mascota.setText("");
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     }
                 }, new Response.ErrorListener() {

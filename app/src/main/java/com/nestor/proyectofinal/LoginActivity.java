@@ -56,7 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.btnIniciar:
 //                String url = "http://192.168.0.106:8000/api/loginAn";
-                String url = "http://192.168.0.106:8000/api/login";
+//                String url = "http://192.168.0.106:8000/api/login";
+                String url = "http://192.168.0.7:8000/api/login";
 
                 final JSONObject datos = new JSONObject();
                 try {
