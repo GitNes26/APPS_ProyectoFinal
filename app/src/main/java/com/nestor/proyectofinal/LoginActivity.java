@@ -55,9 +55,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final SharedPreferences.Editor appEditor = appSharedPrefs.edit();
         switch (v.getId()){
             case R.id.btnIniciar:
-//                String url = "http://192.168.0.106:8000/api/loginAn";
 //                String url = "http://192.168.0.106:8000/api/login";
-                String url = "http://192.168.0.7:8000/api/login";
+                String url = "http://192.168.0.101:8000/api/login";
 
                 final JSONObject datos = new JSONObject();
                 try {
@@ -72,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(JSONObject response) {
                         try {
                             final String token = response.getString("token");
-                            Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_SHORT).show();
                             appEditor.putString("TOKEN_KEY", token);
                             appEditor.commit();
                             Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
@@ -88,12 +87,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        Toast.makeText(getApplicationContext(), "Correo y/o Contraseña invalidos",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Correo/Contraseña invalido",Toast.LENGTH_LONG).show();
                     }
                 });
                 cartero.add(request);
-
                 break;
+
             case R.id.btnRegistrar:
                 startActivity(new Intent(getApplicationContext(), RegistroActivity.class));
                 break;

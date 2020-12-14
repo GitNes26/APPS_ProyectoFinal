@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Usuario:"
+            android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/imgUsuarioApp"
             app:layout_constraintTop_toTopOf="@+id/imgUsuarioApp" />
@@ -102,8 +103,9 @@
 
         <ImageButton
             android:id="@+id/btnEditar"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ciruclo_blanco"
             android:clickable="true"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="@+id/imgUsuarioApp"
@@ -117,10 +119,10 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/ciruclo_blanco"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintTop_toBottomOf="@+id/btnActualizar"
         app:srcCompat="@drawable/alimentador_de_mascotas" />
 
     <ImageView
@@ -232,7 +234,7 @@
         android:text="20 °C"
         android:textSize="32sp"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@+id/imgTermometro"
+        app:layout_constraintEnd_toStartOf="@+id/txtHumedad"
         app:layout_constraintStart_toStartOf="@+id/estatusTemperatua"
         app:layout_constraintTop_toBottomOf="@+id/imgTermometro" />
 
@@ -265,7 +267,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
         android:text="5 idas al Tazon"
-        android:textSize="24sp"
+        android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/CantidadComidas"
         app:layout_constraintTop_toBottomOf="@+id/CantidadComidas" />
@@ -315,14 +317,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/btnActualizar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ciruclo_blanco"
+        android:backgroundTint="@color/colorRojo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"/>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:srcCompat="@android:drawable/ic_popup_sync" />
 <!--        app:srcCompat="@android:drawable/stat_notify_sync" />-->
 
     <Switch
@@ -337,5 +342,15 @@
         app:layout_constraintEnd_toEndOf="@+id/LabelRellenar"
         app:layout_constraintStart_toStartOf="@+id/LabelRellenar"
         app:layout_constraintTop_toBottomOf="@+id/LabelRellenar" />
+
+    <TextView
+        android:id="@+id/txtFechaActualizacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="fecha de actualización"
+        app:layout_constraintBottom_toBottomOf="@+id/btnActualizar"
+        app:layout_constraintEnd_toStartOf="@+id/btnActualizar"
+        app:layout_constraintTop_toTopOf="@+id/btnActualizar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

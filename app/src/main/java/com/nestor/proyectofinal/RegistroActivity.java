@@ -45,8 +45,7 @@ public class RegistroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                String url = "http://192.168.0.106:8000/api/registro";
-                String url = "http://192.168.0.7:8000/api/registro";
-//                String url = "http://192.168.0.105:8000/api/usuarios";
+                String url = "http://192.168.0.101:8000/api/registro";
 
                 JSONObject datos = new JSONObject();
                 try {

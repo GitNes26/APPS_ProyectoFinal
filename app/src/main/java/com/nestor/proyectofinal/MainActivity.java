@@ -1,11 +1,15 @@
 package com.nestor.proyectofinal;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.DateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -31,19 +35,22 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.lang.reflect.Type;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView imgUsuarioApp;
     TextView txtIdApp, txtUsuarioApp, txtContraApp, txtCorreoApp, txtCreadoApp, txtActualizadoApp,
             txtMascota, txtKilogramos, txtPorcentajeComida, txtAlimentoTazon, txtGrados, txtHumedad,
-            txtCantidadComidas;
+            txtCantidadComidas, txtFechaActualizacion;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
     public String permitirRellenar;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mVolleyS = VolleyS.getInstance(this.getApplicationContext());
         cartero = mVolleyS.getRequestQueue();
 
+        findViewById(R.id.btnSalirApp).setOnClickListener(this);
         findViewById(R.id.btnActualizar).setOnClickListener(this);
+        findViewById(R.id.switchRellenador).setOnClickListener(this);
 
         imgUsuarioApp = findViewById(R.id.imgUsuarioApp);
 //        txtIdApp = findViewById(R.id.txtIdApp);
@@ -60,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        txtContraApp = findViewById(R.id.txtContra);
         txtCorreoApp = findViewById(R.id.txtCorreo);
         txtMascota = findViewById(R.id.txtMascota);
+
+        txtFechaActualizacion = findViewById(R.id.txtFechaActualizacion);
+        String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
+        txtFechaActualizacion.setText(fechaHora);
         // Sensores
         txtKilogramos = findViewById(R.id.txtKilogramos);
         txtPorcentajeComida = findViewById(R.id.txtPorcentajeComida);
@@ -77,13 +90,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        String bCorreo = extra.getString("email");
 ////        final String bToken = extra.getString("token");
 
-//        String url = "http://192.168.0.106:8000/api/perfil/"+bCorreo;
-//        String url = "http://192.168.0.106:8000/api/usuarios";
 //        String url = "http://192.168.0.106:8000/api/vista"; //regresa datos de perfil
-        String url = "http://192.168.0.7:8000/api/vista"; //regresa datos de perfil
+        String url = "http://192.168.0.101:8000/api/vista"; //regresa datos de perfil
 
-//        Toast.makeText(getApplicationContext(),bCorreo,Toast.LENGTH_LONG).show();
-        Toast.makeText(MainActivity.this, appSharedPrefs.getString("TOKEN_KEY","NO_TOKEN").toString(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, appSharedPrefs.getString("TOKEN_KEY","NO_TOKEN").toString(), Toast.LENGTH_SHORT).show();
+
         final JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -121,10 +132,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.d("headers", headers.toString());
                 return headers;
             }
-        };
+        };request.setRetryPolicy(new DefaultRetryPolicy(500000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         cartero.add(request);
 
-        String urlAct = "http://192.168.0.7:8000/api/solicitardatos";
+        String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
 
         final JsonObjectRequest solicarDatos = new JsonObjectRequest(Request.Method.GET, urlAct, null, new Response.Listener<JSONObject>() {
             @Override
@@ -133,11 +146,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JSONArray sensores = response.getJSONArray("sensores");
                     JSONObject datosSensores = sensores.getJSONObject(0);
 
-                    txtKilogramos.setText(datosSensores.getString("ultrasonico"));
-//                            txtPorcentajeComida
+                    int sensorKilos = datosSensores.getInt("ultrasonico");
+                    int kilos = (sensorKilos*40);
+                    txtKilogramos.setText(String.valueOf(kilos)+"g");
+                    txtPorcentajeComida.setText(String.valueOf(sensorKilos*2)+"%");
+
                     txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
-                    txtGrados.setText(datosSensores.getString("temperatura"));
-                    txtHumedad.setText(datosSensores.getString("humedad"));
+
+                    double grados = datosSensores.getDouble("temperatura");
+                    txtGrados.setText(String.format("%.1f",grados)+"°C");
+                    int humedad = datosSensores.getInt("humedad");
+                    txtHumedad.setText(String.valueOf(humedad)+"%");
+
                     txtCantidadComidas.setText(datosSensores.getString("pir"));
                     permitirRellenar = datosSensores.getString("boton");
                 } catch (JSONException e) {
@@ -164,33 +184,72 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         cartero.add(solicarDatos);
 
-        findViewById(R.id.btnSalirApp).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View boton) {
         final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
+
         switch (boton.getId()) {
             case R.id.btnSalirApp:
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                String urlOut = "http://192.168.0.101:8000/api/logout";
+
+                final JsonObjectRequest cerrarSesion = new JsonObjectRequest(Request.Method.DELETE, urlOut, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getApplicationContext(),"Sesion finalizada", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                    }
+                }){
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Authorization", "Bearer " + appSharedPrefs.getString("TOKEN_KEY", "NO_TOKEN").toString());
+                        Log.d("headers", headers.toString());
+                        return headers;
+                    }
+                };
+                cartero.add(cerrarSesion);
                 break;
+
             case R.id.btnActualizar:
-                Toast.makeText(getApplicationContext(),"click", Toast.LENGTH_LONG).show();
-                String urlAct = "http://192.168.0.7:8000/api/solicitardatos";
+//                Toast.makeText(getApplicationContext(),"click", Toast.LENGTH_LONG).show();
+                final String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
+
+                String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
 
                 final JsonObjectRequest solicarDatos = new JsonObjectRequest(Request.Method.GET, urlAct, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+                            txtFechaActualizacion.setText(fechaHora);
+
                             JSONArray sensores = response.getJSONArray("sensores");
                             JSONObject datosSensores = sensores.getJSONObject(0);
 
-                            txtKilogramos.setText(datosSensores.getString("ultrasonico"));
-//                            txtPorcentajeComida
-                            txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
-                            txtGrados.setText(datosSensores.getString("temperatura"));
-                            txtHumedad.setText(datosSensores.getString("humedad"));
+                            int sensorKilos = 1;//datosSensores.getInt("ultrasonico");
+                            int kilos = ((sensorKilos+2000));
+                            txtKilogramos.setText(String.valueOf(kilos)+"g");
+                            txtPorcentajeComida.setText(String.valueOf((sensorKilos+100)-sensorKilos)+"%");
+                            txtAlimentoTazon.setText(String.valueOf(sensorKilos));
+
+//                            txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
+
+                            double grados = datosSensores.getDouble("temperatura");
+                            txtGrados.setText(String.format("%.1f",grados)+"°C");
+                            int humedad = datosSensores.getInt("humedad");
+                            txtHumedad.setText(String.valueOf(humedad)+"%");
+
                             txtCantidadComidas.setText(datosSensores.getString("pir"));
+                            permitirRellenar = datosSensores.getString("boton");
+
+                            Toast.makeText(getApplicationContext(),"Datos Actualizados",Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getApplicationContext(), "Error: "+e.toString(),Toast.LENGTH_LONG).show();
@@ -213,34 +272,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 };
                 cartero.add(solicarDatos);
                 break;
+
             case R.id.switchRellenador:
-                if (permitirRellenar == "1") {  // si esta vacio el tazon
-                    String urlRellenar = "http://192.168.0.7:8000/api/insertardatos";
+                Toast.makeText(getApplicationContext(),"estado",Toast.LENGTH_LONG).show();
+
+                String urlRellenar = "http://192.168.0.101:8000/api/insertardatos";
 
                     final JSONObject datos = new JSONObject();
                     try {
-                        datos.put("miboton", 2);
+                        if (permitirRellenar == "1")   // si esta vacio el tazon
+                            datos.put("miboton", 2);
+                        datos.put("miboton",1);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    final JsonObjectRequest enviarSwitch = new JsonObjectRequest(Request.Method.POST, urlRellenar, null, new Response.Listener<JSONObject>() {
+                    final JsonObjectRequest enviarSwitch = new JsonObjectRequest(Request.Method.POST, urlRellenar, datos, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            try {
-                                JSONArray sensores = response.getJSONArray("sensores");
-                                JSONObject datosSensores = sensores.getJSONObject(0);
-
-                                txtKilogramos.setText(datosSensores.getString("ultrasonico"));
-//                            txtPorcentajeComida
-                                txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
-                                txtGrados.setText(datosSensores.getString("temperatura"));
-                                txtHumedad.setText(datosSensores.getString("humedad"));
-                                txtCantidadComidas.setText(datosSensores.getString("pir"));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Toast.makeText(getApplicationContext(), "Error: "+e.toString(),Toast.LENGTH_LONG).show();
-                            }
+//                            try {
+//                                String estado = response.getString("value");
+                                Toast.makeText(getApplicationContext(),"entro: ",Toast.LENGTH_LONG).show();
+//
+//                                if (estado == "1")
+//                                    Toast.makeText(getApplicationContext(),"Rellenando",Toast.LENGTH_LONG).show();
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
                         }
                     }, new Response.ErrorListener() {
                         @Override
@@ -259,10 +317,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     };
                     cartero.add(enviarSwitch);
 
-                }
-
 //                    JsonObjectRequest reller
                 break;
         }
+    }
+
+    public double CalcularKilos(double medicion){
+        double kilos = 0;
+
+        if(medicion == 0)
+            kilos = 2000;
+        if (medicion < 10)
+            kilos = 1900;
+        if (medicion < 15)
+            kilos = 1800;
+        if (medicion < 20)
+            kilos = 1700;
+        if (medicion < 25)
+            kilos = 1600;
+        if(medicion < 30)
+            kilos = 1500;
+
+        return kilos;
     }
 }
