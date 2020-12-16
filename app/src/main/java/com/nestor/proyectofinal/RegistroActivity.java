@@ -26,6 +26,7 @@ public class RegistroActivity extends AppCompatActivity {
     Button btnRegistrar;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
+    public String ip = "104";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,8 @@ public class RegistroActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String url = "http://192.168.0.106:8000/api/registro";
-                String url = "http://192.168.0.101:8000/api/registro";
+                String url = "http://192.168.0."+ip+":8000/api/registro";
+//                String url = "http://192.168.0.101:8000/api/registro";
 
                 JSONObject datos = new JSONObject();
                 try {

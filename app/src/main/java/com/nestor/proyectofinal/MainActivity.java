@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RequestQueue cartero;
     private VolleyS mVolleyS;
     public String permitirRellenar;
+    private String ip = "104";
+    private String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtMascota = findViewById(R.id.txtMascota);
 
         txtFechaActualizacion = findViewById(R.id.txtFechaActualizacion);
-        String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
         txtFechaActualizacion.setText(fechaHora);
         // Sensores
         txtKilogramos = findViewById(R.id.txtKilogramos);
@@ -88,10 +90,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Bundle extra = getIntent().getExtras();
 //        String bCorreo = extra.getString("email");
-////        final String bToken = extra.getString("token");
+//        final String bToken = extra.getString("token");
 
-//        String url = "http://192.168.0.106:8000/api/vista"; //regresa datos de perfil
-        String url = "http://192.168.0.101:8000/api/vista"; //regresa datos de perfil
+        String url = "http://192.168.0."+ip+":8000/api/vista"; //regresa datos de perfil
+//        String url = "http://192.168.0.101:8000/api/vista"; //regresa datos de perfil
 
 //        Toast.makeText(MainActivity.this, appSharedPrefs.getString("TOKEN_KEY","NO_TOKEN").toString(), Toast.LENGTH_SHORT).show();
 
@@ -137,52 +139,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         cartero.add(request);
 
-        String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
+        String urlAct = "http://192.168.0."+ip+":8000/api/solicitardatos";
+//        String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
 
-        final JsonObjectRequest solicarDatos = new JsonObjectRequest(Request.Method.GET, urlAct, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray sensores = response.getJSONArray("sensores");
-                    JSONObject datosSensores = sensores.getJSONObject(0);
-
-                    int sensorKilos = datosSensores.getInt("ultrasonico");
-                    int kilos = (sensorKilos*40);
-                    txtKilogramos.setText(String.valueOf(kilos)+"g");
-                    txtPorcentajeComida.setText(String.valueOf(sensorKilos*2)+"%");
-
-                    txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
-
-                    double grados = datosSensores.getDouble("temperatura");
-                    txtGrados.setText(String.format("%.1f",grados)+"°C");
-                    int humedad = datosSensores.getInt("humedad");
-                    txtHumedad.setText(String.valueOf(humedad)+"%");
-
-                    txtCantidadComidas.setText(datosSensores.getString("pir"));
-                    permitirRellenar = datosSensores.getString("boton");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Error: "+e.toString(),Toast.LENGTH_LONG).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + appSharedPrefs.getString("TOKEN_KEY", "NO_TOKEN").toString());
-                Log.d("headers", headers.toString());
-                return headers;
-            }
-        };solicarDatos.setRetryPolicy(new DefaultRetryPolicy(500000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        cartero.add(solicarDatos);
+        SolicitarDatos(urlAct);
 
     }
 
@@ -192,7 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (boton.getId()) {
             case R.id.btnSalirApp:
-                String urlOut = "http://192.168.0.101:8000/api/logout";
+                String urlOut = "http://192.168.0."+ip+":8000/api/logout";
+//                String urlOut = "http://192.168.0.101:8000/api/logout";
 
                 final JsonObjectRequest cerrarSesion = new JsonObjectRequest(Request.Method.DELETE, urlOut, null, new Response.Listener<JSONObject>() {
                     @Override
@@ -222,61 +183,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                Toast.makeText(getApplicationContext(),"click", Toast.LENGTH_LONG).show();
                 final String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
 
-                String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
+                String urlAct = "http://192.168.0."+ip+":8000/api/solicitardatos";
+//                String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
 
-                final JsonObjectRequest solicarDatos = new JsonObjectRequest(Request.Method.GET, urlAct, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            txtFechaActualizacion.setText(fechaHora);
-
-                            JSONArray sensores = response.getJSONArray("sensores");
-                            JSONObject datosSensores = sensores.getJSONObject(0);
-
-                            int sensorKilos = 1;//datosSensores.getInt("ultrasonico");
-                            int kilos = ((sensorKilos+2000));
-                            txtKilogramos.setText(String.valueOf(kilos)+"g");
-                            txtPorcentajeComida.setText(String.valueOf((sensorKilos+100)-sensorKilos)+"%");
-                            txtAlimentoTazon.setText(String.valueOf(sensorKilos));
-
-//                            txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
-
-                            double grados = datosSensores.getDouble("temperatura");
-                            txtGrados.setText(String.format("%.1f",grados)+"°C");
-                            int humedad = datosSensores.getInt("humedad");
-                            txtHumedad.setText(String.valueOf(humedad)+"%");
-
-                            txtCantidadComidas.setText(datosSensores.getString("pir"));
-                            permitirRellenar = datosSensores.getString("boton");
-
-                            Toast.makeText(getApplicationContext(),"Datos Actualizados",Toast.LENGTH_SHORT).show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Error: "+e.toString(),Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                    }
-                }){
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        HashMap<String, String> headers = new HashMap<String, String>();
-                        headers.put("Authorization", "Bearer " + appSharedPrefs.getString("TOKEN_KEY", "NO_TOKEN").toString());
-                        Log.d("headers", headers.toString());
-                        return headers;
-                    }
-                };
-                cartero.add(solicarDatos);
+                SolicitarDatos(urlAct);
                 break;
 
             case R.id.switchRellenador:
                 Toast.makeText(getApplicationContext(),"estado",Toast.LENGTH_LONG).show();
 
-                String urlRellenar = "http://192.168.0.101:8000/api/insertardatos";
+                String urlRellenar = "http://192.168.0."+ip+":8000/api/insertardatos";
+//                String urlRellenar = "http://192.168.0.101:8000/api/insertardatos";
 
                     final JSONObject datos = new JSONObject();
                     try {
@@ -317,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     };
                     cartero.add(enviarSwitch);
 
-//                    JsonObjectRequest reller
                 break;
         }
     }
@@ -339,5 +255,59 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             kilos = 1500;
 
         return kilos;
+    }
+
+    public void SolicitarDatos(String urlAct){
+        final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
+
+        final JsonObjectRequest solicitarDatos = new JsonObjectRequest(Request.Method.GET, urlAct, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    txtFechaActualizacion.setText(fechaHora);
+
+                    JSONArray sensores = response.getJSONArray("sensores");
+                    JSONObject datosSensores = sensores.getJSONObject(0);
+
+                    int sensorKilos = datosSensores.getInt("ultrasonico");
+                    int kilos = ((sensorKilos+2000));
+                    txtKilogramos.setText(String.valueOf(kilos)+"g");
+                    txtPorcentajeComida.setText(String.valueOf((sensorKilos+100)-sensorKilos)+"%");
+                    txtAlimentoTazon.setText(String.valueOf(sensorKilos));
+
+//                            txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
+
+                    int grados = datosSensores.getInt("temperatura");
+                    txtGrados.setText(String.valueOf(grados)+"°C");
+                    int humedad = datosSensores.getInt("humedad");
+                    txtHumedad.setText(String.valueOf(humedad)+"%");
+
+                    txtCantidadComidas.setText(datosSensores.getString("pir"));
+                    permitirRellenar = datosSensores.getString("boton");
+
+                    Toast.makeText(getApplicationContext(),"Datos Actualizados",Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Error: "+e.toString(),Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + appSharedPrefs.getString("TOKEN_KEY", "NO_TOKEN").toString());
+                Log.d("headers", headers.toString());
+                return headers;
+            }
+        };solicitarDatos.setRetryPolicy(new DefaultRetryPolicy(500000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        cartero.add(solicitarDatos);
     }
 }

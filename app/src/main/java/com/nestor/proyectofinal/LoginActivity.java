@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText Contra;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
+    private String ip = "104";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final SharedPreferences.Editor appEditor = appSharedPrefs.edit();
         switch (v.getId()){
             case R.id.btnIniciar:
-//                String url = "http://192.168.0.106:8000/api/login";
-                String url = "http://192.168.0.101:8000/api/login";
+                String url = "http://192.168.0."+ip+":8000/api/login";
+//                String url = "http://192.168.0.101:8000/api/login";
 
                 final JSONObject datos = new JSONObject();
                 try {
