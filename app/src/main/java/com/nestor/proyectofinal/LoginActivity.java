@@ -1,6 +1,7 @@
 package com.nestor.proyectofinal;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +32,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     EditText Correo;
     EditText Contra;
+    LottieAnimationView unlockedAnimation;
+    ConstraintLayout sombra;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
     private String ip = "104";
@@ -48,6 +52,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.btnIniciar).setOnClickListener(this);
         findViewById(R.id.btnRegistrar).setOnClickListener(this);
 
+        sombra = findViewById(R.id.sombra);
+        unlockedAnimation = findViewById(R.id.unlockedAnimation);
     }
 
     @Override
@@ -71,14 +77,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+
                             final String token = response.getString("token");
                             Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_SHORT).show();
                             appEditor.putString("TOKEN_KEY", token);
                             appEditor.commit();
+                            sombra.setVisibility(View.VISIBLE);
+                            unlockedAnimation.playAnimation();
+//                            unlockedAnimation.cancelAnimation();
+//                            sombra.setVisibility(View.GONE);
                             Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
 //                            logeo.putExtra("email", Correo.getText().toString());
 //                            logeo.putExtra("token", token);
-                            startActivity(logeo);
+                                startActivity(logeo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
