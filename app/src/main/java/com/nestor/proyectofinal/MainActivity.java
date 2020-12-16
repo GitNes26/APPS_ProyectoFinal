@@ -2,6 +2,7 @@ package com.nestor.proyectofinal;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView txtIdApp, txtUsuarioApp, txtContraApp, txtCorreoApp, txtCreadoApp, txtActualizadoApp,
             txtMascota, txtKilogramos, txtPorcentajeComida, txtAlimentoTazon, txtGrados, txtHumedad,
             txtCantidadComidas, txtFechaActualizacion;
+    LottieAnimationView loadingAnimation;
+    ConstraintLayout sombra;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
     public String permitirRellenar;
@@ -67,9 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.switchRellenador).setOnClickListener(this);
 
         imgUsuarioApp = findViewById(R.id.imgUsuarioApp);
-//        txtIdApp = findViewById(R.id.txtIdApp);
         txtUsuarioApp = findViewById(R.id.txtUsuario);
-//        txtContraApp = findViewById(R.id.txtContra);
         txtCorreoApp = findViewById(R.id.txtCorreo);
         txtMascota = findViewById(R.id.txtMascota);
 
@@ -83,10 +85,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtHumedad = findViewById(R.id.txtHumedad);
         txtCantidadComidas = findViewById(R.id.txtCantidadComidas);
 
-//        txtCreadoApp = findViewById(R.id.txtCreadoApp);
-//        txtActualizadoApp = findViewById(R.id.txtActualizadoApp);
         final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
 
+        sombra = findViewById(R.id.sombra);
+        loadingAnimation = findViewById(R.id.loadingAnimation);
 
         Bundle extra = getIntent().getExtras();
 //        String bCorreo = extra.getString("email");
@@ -258,6 +260,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void SolicitarDatos(String urlAct){
+        sombra.setVisibility(View.VISIBLE);
+        loadingAnimation.playAnimation();
         final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
 
         final JsonObjectRequest solicitarDatos = new JsonObjectRequest(Request.Method.GET, urlAct, null, new Response.Listener<JSONObject>() {
@@ -309,5 +313,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         cartero.add(solicitarDatos);
+        loadingAnimation.cancelAnimation();
+        sombra.setVisibility(View.GONE);
     }
 }
