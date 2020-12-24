@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     ConstraintLayout sombra;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
-    private String ip = "104";
+    private String ip = "18";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,17 +80,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         try {
 
                             final String token = response.getString("token");
-                            Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Sesion Iniciada",Toast.LENGTH_SHORT).show();
                             appEditor.putString("TOKEN_KEY", token);
                             appEditor.commit();
-                            sombra.setVisibility(View.VISIBLE);
-                            unlockedAnimation.playAnimation();
-//                            unlockedAnimation.cancelAnimation();
-//                            sombra.setVisibility(View.GONE);
-                            Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
+
+                            new CountDownTimer(4100,4100) {
+                                @Override
+                                public void onTick(long millisUntilFinished) {
+                                    sombra.setVisibility(View.VISIBLE);
+                                    unlockedAnimation.playAnimation();
+                                }
+
+                                @Override
+                                public void onFinish() {
+//                                    unlockedAnimation.cancelAnimation();
+                                    sombra.setVisibility(View.GONE);
+                                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                                }
+                            }.start();
+//                            Intent logeo = new Intent(getApplicationContext(), MainActivity.class);
 //                            logeo.putExtra("email", Correo.getText().toString());
 //                            logeo.putExtra("token", token);
-                                startActivity(logeo);
+//                                startActivity(logeo);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

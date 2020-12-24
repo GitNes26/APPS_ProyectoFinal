@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RequestQueue cartero;
     private VolleyS mVolleyS;
     public String permitirRellenar;
-    private String ip = "104";
+    private String ip = "18";
     private String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
 
 
@@ -144,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String urlAct = "http://192.168.0."+ip+":8000/api/solicitardatos";
 //        String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
 
+        sombra.setVisibility(View.VISIBLE);
+        loadingAnimation.playAnimation();
         SolicitarDatos(urlAct);
 
     }
@@ -187,7 +189,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 String urlAct = "http://192.168.0."+ip+":8000/api/solicitardatos";
 //                String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
-
+                sombra.setVisibility(View.VISIBLE);
+                loadingAnimation.playAnimation();
                 SolicitarDatos(urlAct);
                 break;
 
@@ -260,8 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void SolicitarDatos(String urlAct){
-        sombra.setVisibility(View.VISIBLE);
-        loadingAnimation.playAnimation();
+        final String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
         final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
 
         final JsonObjectRequest solicitarDatos = new JsonObjectRequest(Request.Method.GET, urlAct, null, new Response.Listener<JSONObject>() {
@@ -274,9 +276,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject datosSensores = sensores.getJSONObject(0);
 
                     int sensorKilos = datosSensores.getInt("ultrasonico");
-                    int kilos = ((sensorKilos+2000));
-                    txtKilogramos.setText(String.valueOf(kilos)+"g");
-                    txtPorcentajeComida.setText(String.valueOf((sensorKilos+100)-sensorKilos)+"%");
+                    //int kilos = ((sensorKilos+2000));
+                    txtKilogramos.setText(String.valueOf(sensorKilos)+"g");
+                    txtPorcentajeComida.setText(String.valueOf(sensorKilos)+"%");
                     txtAlimentoTazon.setText(String.valueOf(sensorKilos));
 
 //                            txtAlimentoTazon.setText(datosSensores.getString("fotoresistencia"));
@@ -288,11 +290,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     txtCantidadComidas.setText(datosSensores.getString("pir"));
                     permitirRellenar = datosSensores.getString("boton");
-
+                    sombra.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),"Datos Actualizados",Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getApplicationContext(), "Error: "+e.toString(),Toast.LENGTH_LONG).show();
+                    sombra.setVisibility(View.GONE);
                 }
             }
         }, new Response.ErrorListener() {
@@ -313,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         cartero.add(solicitarDatos);
-        loadingAnimation.cancelAnimation();
-        sombra.setVisibility(View.GONE);
+//        loadingAnimation.cancelAnimation();
     }
 }
