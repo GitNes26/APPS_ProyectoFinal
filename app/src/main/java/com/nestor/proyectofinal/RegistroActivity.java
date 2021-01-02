@@ -26,7 +26,7 @@ public class RegistroActivity extends AppCompatActivity {
     Button btnRegistrar;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
-    public String ip = "18";
+    public String ip = "21";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
