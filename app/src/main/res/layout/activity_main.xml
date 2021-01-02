@@ -22,7 +22,7 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:background="@drawable/ciruclo_blanco"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -71,7 +71,7 @@
             android:id="@+id/imgUsuarioApp"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/ciruclo_blanco"
             app:layout_constraintStart_toStartOf="parent"
@@ -168,32 +168,32 @@
         android:id="@+id/estatusComida"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
         android:text="Estatus del Tazon:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/imgContenedor"
-        app:layout_constraintTop_toBottomOf="@+id/imgContenedor" />
+        app:layout_constraintStart_toEndOf="@+id/imgTazonComida"
+        app:layout_constraintTop_toTopOf="@+id/imgTazonComida" />
 
     <TextView
         android:id="@+id/txtHumedad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginStart="12dp"
         android:text="15%"
-        android:textSize="32sp"
+        android:textSize="18sp"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/txtGrados"
         app:layout_constraintTop_toTopOf="@+id/txtGrados" />
 
     <ImageView
         android:id="@+id/imgTazonComida"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/ciruclo_blanco"
-        app:layout_constraintEnd_toEndOf="@+id/estatusComida"
-        app:layout_constraintStart_toStartOf="@+id/estatusComida"
-        app:layout_constraintTop_toBottomOf="@+id/estatusComida"
+        app:layout_constraintStart_toStartOf="@+id/imgContenedor"
+        app:layout_constraintTop_toBottomOf="@+id/imgContenedor"
         app:srcCompat="@drawable/dog_food" />
 
     <TextView
@@ -222,7 +222,7 @@
         android:id="@+id/LabelRellenar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Rellenar Tazon"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -236,8 +236,8 @@
         android:layout_height="100dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/ciruclo_blanco"
-        app:layout_constraintStart_toStartOf="@+id/imgContenedor"
-        app:layout_constraintTop_toBottomOf="@+id/txtAlimentoTazon"
+        app:layout_constraintStart_toStartOf="@+id/imgTazonComida"
+        app:layout_constraintTop_toBottomOf="@+id/imgTazonComida"
         app:srcCompat="@drawable/dog_sensor" />
 
     <TextView
@@ -247,7 +247,7 @@
         android:fontFamily="sans-serif-black"
         android:text="|"
         android:textAlignment="center"
-        android:textSize="45sp"
+        android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/txtGrados"
         app:layout_constraintEnd_toStartOf="@+id/txtHumedad"
@@ -271,6 +271,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:text="fecha de actualización"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/btnActualizar"
         app:layout_constraintEnd_toStartOf="@+id/btnActualizar"
         app:layout_constraintTop_toTopOf="@+id/btnActualizar" />
@@ -279,24 +280,24 @@
         android:id="@+id/txtAlimentoTazon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Con Alimento"
         android:textSize="24sp"
         android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@+id/imgTazonComida"
-        app:layout_constraintStart_toStartOf="@+id/imgTazonComida"
-        app:layout_constraintTop_toBottomOf="@+id/imgTazonComida" />
+        app:layout_constraintStart_toStartOf="@+id/estatusComida"
+        app:layout_constraintTop_toBottomOf="@+id/estatusComida" />
 
     <TextView
         android:id="@+id/txtGrados"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="5dp"
         android:text="20°C"
-        android:textSize="32sp"
+        android:textSize="18sp"
         android:textStyle="italic"
-        app:layout_constraintEnd_toStartOf="@+id/txtHumedad"
-        app:layout_constraintTop_toBottomOf="@+id/imgTermometro" />
+        app:layout_constraintBottom_toBottomOf="@+id/imgTermometro"
+        app:layout_constraintStart_toEndOf="@+id/imgTermometro"
+        app:layout_constraintTop_toTopOf="@+id/imgTermometro" />
 
     <TextView
         android:id="@+id/estatusIgual"
@@ -315,7 +316,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/ciruclo_blanco"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnActualizar"
@@ -323,25 +324,36 @@
 
     <ImageView
         android:id="@+id/imgTermometro"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/ciruclo_blanco"
-        app:layout_constraintEnd_toEndOf="@+id/txtHumedad"
-        app:layout_constraintStart_toStartOf="@+id/txtGrados"
-        app:layout_constraintTop_toBottomOf="@+id/imgContenedor"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contenedorPerfil"
         app:srcCompat="@drawable/temperatura_alta" />
+
+    <TextView
+        android:id="@+id/txtPresenciaPerro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="El perro esta comiendo"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/CantidadComidas"
+        app:layout_constraintTop_toBottomOf="@+id/CantidadComidas" />
 
     <TextView
         android:id="@+id/txtCantidadComidas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="5 idas al Tazon"
-        android:textSize="18sp"
+        android:textSize="10sp"
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="@+id/CantidadComidas"
-        app:layout_constraintTop_toBottomOf="@+id/CantidadComidas" />
+        app:layout_constraintTop_toBottomOf="@+id/txtPresenciaPerro" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sombra"

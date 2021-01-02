@@ -10,10 +10,7 @@ import android.icu.text.DateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,16 +24,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -44,10 +36,10 @@ import java.util.Map;
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView imgUsuarioApp;
+    ImageView imgUsuarioApp, imgTermometro;
     TextView txtIdApp, txtUsuarioApp, txtContraApp, txtCorreoApp, txtCreadoApp, txtActualizadoApp,
             txtMascota, txtKilogramos, txtPorcentajeComida, txtAlimentoTazon, txtGrados, txtHumedad,
-            txtCantidadComidas, txtFechaActualizacion;
+            txtPresenciaPerro, txtCantidadComidas, txtFechaActualizacion;
     LottieAnimationView loadingAnimation;
     ConstraintLayout sombra;
     private RequestQueue cartero;
@@ -74,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtUsuarioApp = findViewById(R.id.txtUsuario);
         txtCorreoApp = findViewById(R.id.txtCorreo);
         txtMascota = findViewById(R.id.txtMascota);
-
+        imgTermometro = findViewById(R.id.imgTermometro);
         txtFechaActualizacion = findViewById(R.id.txtFechaActualizacion);
         txtFechaActualizacion.setText(fechaHora);
         // Sensores
@@ -83,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtAlimentoTazon = findViewById(R.id.txtAlimentoTazon);
         txtGrados = findViewById(R.id.txtGrados);
         txtHumedad = findViewById(R.id.txtHumedad);
+        txtPresenciaPerro = findViewById(R.id.txtPresenciaPerro);
         txtCantidadComidas = findViewById(R.id.txtCantidadComidas);
 
         final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
@@ -262,6 +255,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return kilos;
     }
 
+    public void SetImagenTemperatura (int temperatura){
+        if(temperatura < 22){imgTermometro.setImageResource(R.drawable.temperatura_baja);}
+        else{imgTermometro.setImageResource(R.drawable.temperatura_alta);}
+    }
+
     public void SolicitarDatos(String urlAct){
         final String fechaHora = DateFormat.getDateTimeInstance().format(new Date());
         final SharedPreferences appSharedPrefs = getSharedPreferences("settings",MODE_PRIVATE);
@@ -287,8 +285,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     txtGrados.setText(String.valueOf(grados)+"°C");
                     int humedad = datosSensores.getInt("humedad");
                     txtHumedad.setText(String.valueOf(humedad)+"%");
+                    SetImagenTemperatura(grados);
 
-                    txtCantidadComidas.setText(datosSensores.getString("pir"));
+                    txtPresenciaPerro.setText(datosSensores.getString("pir"));
+                    txtCantidadComidas.setText(datosSensores.getString("pir")+" idas al plato");
                     permitirRellenar = datosSensores.getString("boton");
                     sombra.setVisibility(View.GONE);
                     Toast.makeText(getApplicationContext(),"Datos Actualizados",Toast.LENGTH_SHORT).show();
@@ -316,6 +316,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         cartero.add(solicitarDatos);
-//        loadingAnimation.cancelAnimation();
     }
 }
