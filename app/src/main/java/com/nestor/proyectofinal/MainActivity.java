@@ -9,11 +9,13 @@ import android.content.SharedPreferences;
 import android.icu.text.DateFormat;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.AuthFailureError;
@@ -40,8 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView txtIdApp, txtUsuarioApp, txtContraApp, txtCorreoApp, txtCreadoApp, txtActualizadoApp,
             txtMascota, txtKilogramos, txtPorcentajeComida, txtAlimentoTazon, txtGrados, txtHumedad,
             txtPresenciaPerro, txtCantidadComidas, txtFechaActualizacion;
-    LottieAnimationView loadingAnimation;
+    LottieAnimationView loadingAnimation, servirComidaAnimation;
     ConstraintLayout sombra;
+    ToggleButton tbServirComida;
     private RequestQueue cartero;
     private VolleyS mVolleyS;
     public String permitirRellenar;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnSalirApp).setOnClickListener(this);
         findViewById(R.id.btnActualizar).setOnClickListener(this);
         findViewById(R.id.switchRellenador).setOnClickListener(this);
+        tbServirComida = findViewById(R.id.switchRellenador);
 
         imgUsuarioApp = findViewById(R.id.imgUsuarioApp);
         txtUsuarioApp = findViewById(R.id.txtUsuario);
@@ -82,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sombra = findViewById(R.id.sombra);
         loadingAnimation = findViewById(R.id.loadingAnimation);
+        servirComidaAnimation = findViewById(R.id.sirviendoComidaAnimation);
 
         Bundle extra = getIntent().getExtras();
 //        String bCorreo = extra.getString("email");
@@ -138,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        String urlAct = "http://192.168.0.101:8000/api/solicitardatos";
 
         sombra.setVisibility(View.VISIBLE);
+        loadingAnimation.setVisibility(View.VISIBLE);
         loadingAnimation.playAnimation();
         SolicitarDatos(urlAct);
 
@@ -193,16 +199,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String urlRellenar = "http://192.168.0."+ip+":8000/api/insertardatos";
 //                String urlRellenar = "http://192.168.0.101:8000/api/insertardatos";
 
+                loadingAnimation.setVisibility(View.GONE);
+                sombra.setVisibility(View.VISIBLE);
+                servirComidaAnimation.setVisibility(View.VISIBLE);
+                servirComidaAnimation.playAnimation();
+
                     final JSONObject datos = new JSONObject();
                     try {
-                        if (permitirRellenar == "1")   // si esta vacio el tazon
-                            datos.put("miboton", 2);
-                        datos.put("miboton",1);
+                        if (permitirRellenar == "1"){   // si esta vacio el tazon
+                            datos.put("miboton", 2);}
+                        else {datos.put("miboton",1);}
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    final JsonObjectRequest enviarSwitch = new JsonObjectRequest(Request.Method.POST, urlRellenar, datos, new Response.Listener<JSONObject>() {
+                    final JsonObjectRequest servirComida = new JsonObjectRequest(Request.Method.POST, urlRellenar, datos, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
 //                            try {
@@ -230,7 +241,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             return headers;
                         }
                     };
-                    cartero.add(enviarSwitch);
+                    cartero.add(servirComida);
+
+                new CountDownTimer(10000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        tbServirComida.setTextOn("RELLENANDO...");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        tbServirComida.setTextOff("RELLENADO");
+                        tbServirComida.setChecked(false);
+                        sombra.setVisibility(View.GONE);
+                        servirComidaAnimation.setVisibility(View.GONE);
+                    }
+                }.start();
 
                 break;
         }
@@ -256,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void SetImagenTemperatura (int temperatura){
-        if(temperatura < 22){imgTermometro.setImageResource(R.drawable.temperatura_baja);}
+        if(temperatura < 20){imgTermometro.setImageResource(R.drawable.temperatura_baja);}
         else{imgTermometro.setImageResource(R.drawable.temperatura_alta);}
     }
 

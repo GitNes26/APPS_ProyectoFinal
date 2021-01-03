@@ -247,7 +247,7 @@
         android:fontFamily="sans-serif-black"
         android:text="|"
         android:textAlignment="center"
-        android:textSize="35sp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/txtGrados"
         app:layout_constraintEnd_toStartOf="@+id/txtHumedad"
@@ -375,7 +375,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loading" />
+            app:lottie_rawRes="@raw/huella_perro"
+            app:lottie_speed="2.5"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/sirviendoComidaAnimation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/sirviendo_comida_perro"
+            app:lottie_speed="1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
